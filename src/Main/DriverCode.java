@@ -4,26 +4,51 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DriverCode {
+//Validates that option input is withing our case range 0-...
+    public static boolean ValidOption(int choice){
+        if((choice < 0) || (choice > 9 )) {
+            return false;
+        }
+        return true;
+    }
+
+//Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
         int option = 100;
         String input;
+        //This grabs options from console
+        Scanner in = new Scanner(System.in);
+        //This grabs strings from console for queries
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         //Loop menu until user chooses 0 for exit
         while (option != 0) {
             System.out.println(menu + "\n");
             System.out.print("Enter Menu Option: ");
-
-            Scanner in = new Scanner(System.in);
-            option = in.nextInt();
+            //IDK how to make this work --> if we cant figure it out its all good
+            //This try should make sure the user only enters int for the option so the program wont crash
+           /* try {
+                option = in.nextInt();
+            }
+            catch (InputMismatchException e){
+                System.out.println("You have entered invalid data!");
+            }
+*           */
             System.out.println();
-            //Might want to validate the input to make sure only nums 0-?
-            //Then we can loop here until something valid comes in
+            //Validating that the user is entering 0-...
+            while (ValidOption(option) == false) {
+                System.out.println("Invalid input! Please try again");
+                System.out.println(menu + "\n");
+                System.out.print("Enter Menu Option: ");
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                option = in.nextInt();
+                System.out.println();
+            }
          switch (option) {
              //exit
              case 0:
