@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fafd3b6-7cf4-4403-92ea-74c744ad4533" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Main/DriverCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main/Query.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main/DatabaseConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/DriverCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/DriverCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Query.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +39,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.DriverCode">
+    <configuration name="DatabaseConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.DatabaseConnection" />
+      <module name="Music Database" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DriverCode" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.DriverCode" />
       <module name="Music Database" />
@@ -67,6 +81,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.DriverCode" />
+        <item itemvalue="Application.DatabaseConnection" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -81,7 +96,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575259334351</updated>
-      <workItem from="1575259338764" duration="5472000" />
+      <workItem from="1575259338764" duration="9732000" />
     </task>
     <servers />
   </component>

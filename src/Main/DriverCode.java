@@ -1,14 +1,17 @@
 package Main;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DriverCode {
-    public static void main(String args[])
-    {
+    public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
         int option = 100;
         //We will make a query object here that can be used in all our switch statements to run queries
-        //Query search = new Query();
+        Query search = new Query();
 
         //Loop menu until user chooses 0 for exit
         while (option != 0) {
@@ -21,6 +24,7 @@ public class DriverCode {
             //Might want to validate the input to make sure only nums 0-?
             //Then we can loop here until something valid comes in
 
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
          switch (option) {
              //exit
              case 0:
@@ -28,7 +32,9 @@ public class DriverCode {
          //Search by:
              //Song
              case 1:
-                //search.song();
+                 System.out.print("Song name to search: ");
+                 String input = reader.readLine();
+                 Query.song(input);
                 break;
              //Artist
              case 2:
