@@ -30,6 +30,7 @@ public class DriverCode {
         while (option != 0) {
             System.out.println(menu + "\n");
             System.out.print("Enter Menu Option: ");
+            option = in.nextInt();
             //IDK how to make this work --> if we cant figure it out its all good
             //This try should make sure the user only enters int for the option so the program wont crash
            /* try {
