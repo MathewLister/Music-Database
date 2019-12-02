@@ -37,6 +37,9 @@ public class DriverCode {
             } catch (NumberFormatException e) {
                 //e.printStackTrace();
                 System.out.println("Wrong Input");
+                System.out.println("-------------------------------------------------------------------\n");
+                System.out.println();
+                continue;
             }
             //IDK how to make this work --> if we cant figure it out its all good
             /*
@@ -73,6 +76,8 @@ public class DriverCode {
             }*/
             if( !ValidOption(option) ) {
                 System.out.println("Invalid input! Please try again");
+                System.out.println("-------------------------------------------------------------------\n");
+                System.out.println();
                 continue;
             }
          switch (option) {
