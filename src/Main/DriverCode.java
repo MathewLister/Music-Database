@@ -80,7 +80,6 @@ public class DriverCode {
              //Genre
              case 7:
                 break;
-             //IDK?
              default:
                  System.out.println("Please enter an option 0-7");
                  break;
