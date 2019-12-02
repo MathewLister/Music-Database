@@ -20,7 +20,7 @@ public class Main {
             System.out.println("Who do you want to search for?: ");
             Scanner userInput = new Scanner(System.in);
             String inputArtist = userInput.nextLine();
-            String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name = " + "'" + inputArtist+ "'"+ ";";
+            String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + inputArtist + "%';";
             ResultSet rs = stmt.executeQuery(query);
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
