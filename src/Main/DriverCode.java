@@ -30,7 +30,14 @@ public class DriverCode {
         while (option != 0) {
             System.out.println(menu + "\n");
             System.out.print("Enter Menu Option: ");
-            option = in.nextInt();
+            //option = in.nextInt();
+            String tmp = in.nextLine();
+            try{
+                option = Integer.parseInt(tmp);
+            } catch (NumberFormatException e) {
+                //e.printStackTrace();
+                System.out.println("Wrong Input");
+            }
             //IDK how to make this work --> if we cant figure it out its all good
             /*
             ===> 1. Get input in as a string
@@ -55,6 +62,7 @@ public class DriverCode {
 *           */
             System.out.println();
             //Validating that the user is entering 0-...
+            /*
             while (ValidOption(option) == false) {
                 System.out.println("Invalid input! Please try again");
                 System.out.println(menu + "\n");
@@ -62,6 +70,10 @@ public class DriverCode {
 
                 option = in.nextInt();
                 System.out.println();
+            }*/
+            if( !ValidOption(option) ) {
+                System.out.println("Invalid input! Please try again");
+                continue;
             }
          switch (option) {
              //exit
