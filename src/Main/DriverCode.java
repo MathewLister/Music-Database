@@ -10,8 +10,7 @@ public class DriverCode {
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
         int option = 100;
-        //We will make a query object here that can be used in all our switch statements to run queries
-        Query search = new Query();
+        String input;
 
         //Loop menu until user chooses 0 for exit
         while (option != 0) {
@@ -33,12 +32,12 @@ public class DriverCode {
              //Song
              case 1:
                  System.out.print("Song name to search: ");
-                 String input = reader.readLine();
+                 input = reader.readLine();
                  Query.song(input);
                 break;
              //Artist
              case 2:
-                 //search.artist();
+                 //Query.artist();
                  break;
              //Album
              case 3:
@@ -57,6 +56,7 @@ public class DriverCode {
                 break;
              //IDK?
              default:
+                 System.out.println("Please enter an option 0-7");
                  break;
          }
          System.out.println("-------------------------------------------------------------------\n");
