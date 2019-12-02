@@ -32,6 +32,19 @@ public class DriverCode {
             System.out.print("Enter Menu Option: ");
             option = in.nextInt();
             //IDK how to make this work --> if we cant figure it out its all good
+            /*
+            ===> 1. Get input in as a string
+                2. try to convert from string to int
+                3. if conversion fails, wrong input
+                String tmp = in.nextLine();
+                try{
+                    option = Integer.parseInt(tmp);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("Wrong Input");
+                }
+
+             */
             //This try should make sure the user only enters int for the option so the program wont crash
            /* try {
                 option = in.nextInt();
