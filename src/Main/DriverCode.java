@@ -31,15 +31,15 @@ public class DriverCode {
             System.out.println(menu + "\n");
             System.out.print("Enter Menu Option: ");
             //option = in.nextInt();
-            String tmp = in.nextLine();
+            String tmp = in.nextLine(); // get input from user
             try{
-                option = Integer.parseInt(tmp);
+                option = Integer.parseInt(tmp); // try to convert string to int
             } catch (NumberFormatException e) {
                 //e.printStackTrace();
                 System.out.println("Wrong Input");
                 System.out.println("-------------------------------------------------------------------\n");
                 System.out.println();
-                continue;
+                continue; // skip to next loop iteration
             }
             //IDK how to make this work --> if we cant figure it out its all good
             /*
@@ -74,11 +74,11 @@ public class DriverCode {
                 option = in.nextInt();
                 System.out.println();
             }*/
-            if( !ValidOption(option) ) {
+            if( !ValidOption(option) ) { // check if option is a valid option in menu
                 System.out.println("Invalid input! Please try again");
                 System.out.println("-------------------------------------------------------------------\n");
                 System.out.println();
-                continue;
+                continue; // skip to next loop iteration
             }
          switch (option) {
              //exit
