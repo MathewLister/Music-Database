@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DriverCode {
-//Validates that option input is withing our case range 0-...
+//Validates that option input is within our case range 0-...
     public static boolean ValidOption(int choice){
         if((choice < 0) || (choice > 9 )) {
             return false;
