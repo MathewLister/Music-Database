@@ -107,6 +107,57 @@ public class Query {
         }
     }
 
+    // not working: need admin privileges on database for GROUP BY
+    public static void getAllSongs ()
+    {
+        String getSongs = "SELECT s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name";
+        Connection con = DatabaseConnection.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getSongs);
+            if(rs.next()) {
+                System.out.println("Song Name || Artist Name || Album Name || Genre");
+                do{
+                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
+                } while(rs.next());
+            } else {
+                System.out.println("Could Not Be Found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getAllArtists (String userInput)
+    {
+
+    }
+
+    public static void getAllAlbums (String userInput)
+    {
+
+    }
+
+    public static void getAllLabels (String userInput)
+    {
+
+    }
+
+    public static void getAllPlaylists (String userInput)
+    {
+
+    }
+
+    public static void getAllConcerts (String userInput)
+    {
+
+    }
+
+    public static void getAllGenres (String userInput)
+    {
+
+    }
+
     public static String insertSongIntoPlaylist (int songID, int playlistID)
     {
         String returnMessage = "Could not complete insertion";
@@ -146,6 +197,16 @@ public class Query {
     }
 
     public static void insertConcert (String userInput)
+    {
+
+    }
+
+    public static void deletePlaylist (String userInput)
+    {
+
+    }
+
+    public static void deleteConcert (String userInput)
     {
 
     }

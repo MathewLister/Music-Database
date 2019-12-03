@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DriverCode {
     //Validates that option input is within our case range 0-...
     public static boolean ValidOption(int choice) {
-        if ((choice < 0) || (choice > 9)) {
+        if ((choice < 0) || (choice > 18)) {
             return false;
         }
         return true;
@@ -18,8 +18,9 @@ public class DriverCode {
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
-        String insert = "********INSERT********\n8. Insert Song in Playlist\n9. Insert a Concert";
-        String delete = "********DELETE********\n10. Delete a Playlist\n11. Delete a Concert";
+        String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n";
+        String insert = "********INSERT********\n15. Insert Song in Playlist\n16. Insert a Concert";
+        String delete = "********DELETE********\n17. Delete a Playlist\n18. Delete a Concert";
         int option = 100;
         String input;
         //This grabs options from console
@@ -30,6 +31,7 @@ public class DriverCode {
         //Loop menu until user chooses 0 for exit
         while (option != 0) {
             System.out.println(menu + "\n");
+            System.out.println(searchAll + "\n");
             System.out.println(insert + "\n");
             System.out.println(delete + "\n");
             System.out.print("Enter Menu Option: ");
@@ -90,6 +92,28 @@ public class DriverCode {
                     Query.genre(input);
                     break;
                 case 8:
+                    // get all songs
+                    Query.getAllSongs();
+                    break;
+                case 9:
+                    // get all artists
+                    break;
+                case 10:
+                    // get all albums
+                    break;
+                case 11:
+                    // get all labels
+                    break;
+                case 12:
+                    // get all playlists
+                    break;
+                case 13:
+                    // get all concerts
+                    break;
+                case 14:
+                    //get all genres
+                    break;
+                case 15:
                     // insert song in playlist
                     int songID, playlistID;
                     String output;
@@ -107,9 +131,7 @@ public class DriverCode {
                         System.out.println("Invalid Input");
                     }
                     break;
-                case 9:
-                    //insert a concert?
-                    break;
+
                 default:
                     System.out.println("Please enter an option 0-9");
                     break;
