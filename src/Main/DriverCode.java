@@ -103,6 +103,9 @@ public class DriverCode {
                  break;
              //Play List
              case 5:
+                 System.out.print("Playlist name to search: ");
+                 input = reader.readLine();
+                 Query.playList(input);
                  break;
              //Concert
              case 6:
