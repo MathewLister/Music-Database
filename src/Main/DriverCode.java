@@ -97,21 +97,27 @@ public class DriverCode {
                     break;
                 case 9:
                     // get all artists
+                    Query.getAllArtists();
                     break;
                 case 10:
                     // get all albums
+                    Query.getAllAlbums();
                     break;
                 case 11:
                     // get all labels
+                    Query.getAllLabels();
                     break;
                 case 12:
                     // get all playlists
+                    Query.getAllPlaylists();
                     break;
                 case 13:
                     // get all concerts
+                    Query.getAllConcerts();
                     break;
                 case 14:
                     //get all genres
+                    Query.getAllGenres();
                     break;
                 case 15:
                     // insert song in playlist

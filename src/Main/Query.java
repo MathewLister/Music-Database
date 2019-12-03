@@ -110,52 +110,70 @@ public class Query {
     // not working: need admin privileges on database for GROUP BY
     public static void getAllSongs ()
     {
-        String getSongs = "SELECT s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name";
+        String getSongs = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name";
         Connection con = DatabaseConnection.getConnection();
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(getSongs);
             if(rs.next()) {
-                System.out.println("Song Name || Artist Name || Album Name || Genre");
+                System.out.println("Song ID || Song Name || Artist Name || Album Name || Genre");
                 do{
-                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
+                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4) + " || " + rs.getString(5));
                 } while(rs.next());
             } else {
                 System.out.println("Could Not Be Found");
             }
+            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void getAllArtists (String userInput)
+    public static void getAllArtists ()
     {
 
     }
 
-    public static void getAllAlbums (String userInput)
+    public static void getAllAlbums ()
     {
 
     }
 
-    public static void getAllLabels (String userInput)
+    public static void getAllLabels ()
     {
 
     }
 
-    public static void getAllPlaylists (String userInput)
+    public static void getAllPlaylists ()
     {
 
     }
 
-    public static void getAllConcerts (String userInput)
+    public static void getAllConcerts ()
     {
 
     }
 
-    public static void getAllGenres (String userInput)
+    public static void getAllGenres ()
     {
-
+        String getGenres = "SELECT DISTINCT genre FROM album;";
+        Connection con = DatabaseConnection.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getGenres);
+            if(rs.next()) {
+                System.out.println("Genres: ");
+                do{
+                    System.out.println(rs.getString(1));
+                } while (rs.next());
+            }
+            else {
+                System.out.println("No Genres Found");
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String insertSongIntoPlaylist (int songID, int playlistID)
