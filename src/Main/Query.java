@@ -8,10 +8,10 @@ import java.util.Scanner;
 import java.util.TimeZone;
 
 public class Query {
-    public static void song (String userInput) throws SQLException {
-        Connection connection = DatabaseConnection.getConnection();
+    public static void song (String userInput) {
+        Connection con = DatabaseConnection.getConnection();
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = con.createStatement();
             String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%';";
             ResultSet rs = stmt.executeQuery(query);
 
@@ -25,15 +25,34 @@ public class Query {
             else {
                 System.out.println("Could Not Be Found");
             }
-            connection.close();
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    public static void artist (Scanner userInput)
+    //Not working!
+    public static void artist (String userInput)
     {
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String query = "SELECT artist_name FROM artist LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(query);
 
+            if(rs != null) {
+                if(rs.isBeforeFirst()) {
+                    while(rs.next()) {
+                        System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+                    }
+                }
+            }
+            else {
+                System.out.println("Artist" + userInput + "Could Not Be Found");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void album (Scanner userInput)
