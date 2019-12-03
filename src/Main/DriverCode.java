@@ -91,6 +91,21 @@ public class DriverCode {
                     break;
                 case 8:
                     // insert song in playlist
+                    int songID, playlistID;
+                    String output;
+                    try{
+                        System.out.print("Song ID (integer): ");
+                        input = reader.readLine();
+                        songID = Integer.parseInt(input);
+                        System.out.print("Playlist ID (integer): ");
+                        input = reader.readLine();
+                        playlistID = Integer.parseInt(input);
+                        output = Query.insertSongIntoPlaylist(songID, playlistID);
+                        System.out.println(output);
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        System.out.println("Invalid Input");
+                    }
                     break;
                 case 9:
                     //insert a concert?
