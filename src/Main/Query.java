@@ -1,5 +1,6 @@
 package Main;
 
+import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -106,11 +107,10 @@ public class Query {
             e.printStackTrace();
         }
     }
-
-    // not working: need admin privileges on database for GROUP BY
+    
     public static void getAllSongs ()
     {
-        String getSongs = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name";
+        String getSongs = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name, al.album_name, s.song_id ORDER BY a.artist_name ASC;";
         Connection con = DatabaseConnection.getConnection();
         try{
             Statement stmt = con.createStatement();
@@ -131,6 +131,23 @@ public class Query {
 
     public static void getAllArtists ()
     {
+        String getArtists = "SELECT artist_id, artist_name FROM artist";
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getArtists);
+            if(rs.next()) {
+                System.out.println("Artist ID || Artist Name");
+                do {
+                    System.out.println(rs.getString(1) + " || " + rs.getString(2));
+                } while (rs.next());
+            } else {
+                System.out.println("No Artists");
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -169,6 +186,27 @@ public class Query {
             }
             else {
                 System.out.println("No Genres Found");
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getAllMembers()
+    {
+        String getMembers = "SELECT p.first_name, p.last_name, a.artist_name FROM person_artist pa JOIN artist a ON pa.artist_id = a.artist_id JOIN person p ON pa.person_id = p.person_id GROUP BY a.artist_name, p.last_name, p.first_name ORDER BY a.artist_name ASC;";
+        Connection con = DatabaseConnection.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getMembers);
+            if(rs.next()) {
+                System.out.println("First Name || Last Name || Artist");
+                do{
+                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3));
+                } while (rs.next());
+            } else {
+                System.out.println("Could Not Find any Members");
             }
             con.close();
         } catch (Exception e) {

@@ -18,9 +18,9 @@ public class DriverCode {
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
-        String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n";
-        String insert = "********INSERT********\n15. Insert Song in Playlist\n16. Insert a Concert";
-        String delete = "********DELETE********\n17. Delete a Playlist\n18. Delete a Concert";
+        String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist\n";
+        String insert = "********INSERT********\n16. Insert Song in Playlist\n17. Insert a Concert";
+        String delete = "********DELETE********\n18. Delete a Playlist\n19. Delete a Concert";
         int option = 100;
         String input;
         //This grabs options from console
@@ -93,6 +93,7 @@ public class DriverCode {
                     break;
                 case 8:
                     // get all songs
+                    // currently not working, waiting on arias' reply
                     Query.getAllSongs();
                     break;
                 case 9:
@@ -120,6 +121,10 @@ public class DriverCode {
                     Query.getAllGenres();
                     break;
                 case 15:
+                    // get members of every artist
+                    Query.getAllMembers();
+                    break;
+                case 16:
                     // insert song in playlist
                     int songID, playlistID;
                     String output;
