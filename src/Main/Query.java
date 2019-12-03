@@ -36,7 +36,7 @@ public class Query {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
-            String query = "SELECT artist_name FROM artist LIKE '%" + userInput + "%';";
+            String query = "SELECT artist_name FROM person_artist pa, artist a, person p WHERE pa.person_id = p.person_id AND pa.artist_id = a.artist_id AND a.artist_name LIKE '%" + userInput + "%';";
             ResultSet rs = stmt.executeQuery(query);
 
             if(rs != null) {
