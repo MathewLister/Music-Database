@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DriverCode {
@@ -19,6 +18,8 @@ public class DriverCode {
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
+        String insert = "********INSERT********\n8. Insert Song in Playlist\n9. Insert a Concert";
+        String delete = "********DELETE********\n10. Delete a Playlist\n11. Delete a Concert";
         int option = 100;
         String input;
         //This grabs options from console
@@ -29,6 +30,8 @@ public class DriverCode {
         //Loop menu until user chooses 0 for exit
         while (option != 0) {
             System.out.println(menu + "\n");
+            System.out.println(insert + "\n");
+            System.out.println(delete + "\n");
             System.out.print("Enter Menu Option: ");
             //option = in.nextInt();
             String tmp = in.nextLine(); // get input from user
@@ -41,39 +44,9 @@ public class DriverCode {
                 System.out.println();
                 continue; // skip to next loop iteration
             }
-            //IDK how to make this work --> if we cant figure it out its all good
-            /*
-            ===> 1. Get input in as a string
-                2. try to convert from string to int
-                3. if conversion fails, wrong input
-                String tmp = in.nextLine();
-                try{
-                    option = Integer.parseInt(tmp);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    System.out.println("Wrong Input");
-                }
 
-             */
-            //This try should make sure the user only enters int for the option so the program wont crash
-           /* try {
-                option = in.nextInt();
-            }
-            catch (InputMismatchException e){
-                System.out.println("You have entered invalid data!");
-            }
-*           */
             System.out.println();
-            //Validating that the user is entering 0-...
-            /*
-            while (ValidOption(option) == false) {
-                System.out.println("Invalid input! Please try again");
-                System.out.println(menu + "\n");
-                System.out.print("Enter Menu Option: ");
 
-                option = in.nextInt();
-                System.out.println();
-            }*/
             if (!ValidOption(option)) { // check if option is a valid option in menu
                 System.out.println("Invalid input! Please try again");
                 System.out.println("-------------------------------------------------------------------\n");
@@ -116,8 +89,14 @@ public class DriverCode {
                     input = reader.readLine();
                     Query.genre(input);
                     break;
+                case 8:
+                    // insert song in playlist
+                    break;
+                case 9:
+                    //insert a concert?
+                    break;
                 default:
-                    System.out.println("Please enter an option 0-7");
+                    System.out.println("Please enter an option 0-9");
                     break;
             }
             System.out.println("-------------------------------------------------------------------\n");

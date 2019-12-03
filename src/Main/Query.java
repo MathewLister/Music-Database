@@ -106,4 +106,14 @@ public class Query {
             e.printStackTrace();
         }
     }
+
+    public static void insertPlaylist (String userInput)
+    {
+
+    }
+
+    public static void insertConcert (String userInput)
+    {
+
+    }
 }
