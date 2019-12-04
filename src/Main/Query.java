@@ -143,9 +143,31 @@ public class Query {
         }
     }
 
-    public static void concert (Scanner userInput)
+    public static void concert (String userInput)
     {
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getConcert = "SELECT con.concert_name, con.concert_date, con.concert_location FROM concert con WHERE con.concert_name LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(getConcert);
+            if(rs != null) {
+                if(rs.isBeforeFirst()) {
+                    System.out.println("Concert || Date || Location");
+                    System.out.println("---------------------------------------------");
+                    while(rs.next()) {
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3));
+                    }
+                    System.out.println("Songs played:");
+                }
+            }
+            else {
+                System.out.println("Concert " + userInput + "Could Not Be Found");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        playList(userInput);
     }
 
     public static void genre (String userInput)
