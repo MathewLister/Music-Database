@@ -219,7 +219,23 @@ public class Query {
 
     public static void getAllAlbums ()
     {
-        String getAlbums = "";
+        String getAlbums = "SELECT a.artist_name, al.album_name, al.album_id FROM artist a JOIN album al ON a.artist_id = al.artist_id GROUP BY a.artist_name, al.album_name, al.album_id ORDER BY a.artist_name;";
+        String myFormat = "| %-30s | %-50s | %-3s |%n";
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getAlbums);
+            if(rs.next()) {
+                System.out.format(myFormat, "Artist Name", "Album Name", "ID");
+                System.out.println("---------------------------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
+                } while(rs.next());
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getAllLabels ()
@@ -262,14 +278,16 @@ public class Query {
     public static void getAllMembers()
     {
         String getMembers = "SELECT p.first_name, p.last_name, a.artist_name FROM person_artist pa JOIN artist a ON pa.artist_id = a.artist_id JOIN person p ON pa.person_id = p.person_id GROUP BY a.artist_name, p.last_name, p.first_name ORDER BY a.artist_name ASC;";
+        String myFormat = "| %-30s | %-30s | %-30s |%n";
         Connection con = DatabaseConnection.getConnection();
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(getMembers);
             if(rs.next()) {
-                System.out.println("First Name || Last Name || Artist");
+                System.out.format(myFormat, "First Name", "Last Name", "Artist Name");
+                System.out.println("----------------------------------------------------------------------------------------------------");
                 do{
-                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3));
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
                 } while (rs.next());
             } else {
                 System.out.println("Could Not Find any Members");
