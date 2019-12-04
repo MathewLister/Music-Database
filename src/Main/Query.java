@@ -475,6 +475,7 @@ public class Query {
         String removePlaylist = "DELETE FROM playlist WHERE playlist_id = " + userInput + ";";
         String returnMessage = "Could not delete";
         Connection con = DatabaseConnection.getConnection();
+<<<<<<< HEAD
 
         try {
             Statement stmt = con.createStatement();
@@ -489,6 +490,22 @@ public class Query {
         }
 
 
+=======
+
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(playlistIsConcert);
+            if(!rs.next()) {
+                
+            } else {
+                returnMessage = "Playlist is a concert. Please Delete concert first";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+>>>>>>> master
         return returnMessage;
     }
 

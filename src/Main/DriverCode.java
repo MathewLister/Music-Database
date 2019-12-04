@@ -146,9 +146,12 @@ public class DriverCode {
                     break;
                 case 17:
 <<<<<<< HEAD
+<<<<<<< HEAD
                         break;
                 case 18:
 =======
+=======
+>>>>>>> master
                     //insert a concert
                     break;
                 case 18:
@@ -168,6 +171,9 @@ public class DriverCode {
                     //delete concert
 
 
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
                     break;
 
