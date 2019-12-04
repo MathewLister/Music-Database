@@ -304,7 +304,28 @@ public class Query {
 
     public static void getAllConcerts ()
     {
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getConcert = "SELECT concert_name, concert_date, concert_location FROM concert;";
+            String myFormat = "| %-30s | %-30s | %-30s |%n";
+            ResultSet rs = stmt.executeQuery(getConcert);
+            if(rs.next()) {
+                System.out.format(myFormat, "Concert", "Date", "Location");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
+                } while (rs.next());
+                System.out.println("----------------------------------------------------------------------------------------------------");
+            }
+            else {
+                System.out.println("No concert found");
+            }
+            con.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getAllGenres ()
