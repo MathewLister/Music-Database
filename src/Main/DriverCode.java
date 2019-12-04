@@ -7,14 +7,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DriverCode {
-    //Validates that option input is within our case range 0-...
-    public static boolean ValidOption(int choice) {
-        if ((choice < 0) || (choice > 19)) {
-            return false;
-        }
-        return true;
-    }
-
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
@@ -49,7 +41,7 @@ public class DriverCode {
 
             System.out.println();
 
-            if (!ValidOption(option)) { // check if option is a valid option in menu
+            if ((option >= 0) && (option <= 19)) { // check if option is a valid option in menu
                 System.out.println("Invalid input! Please try again");
                 System.out.println("-------------------------------------------------------------------\n");
                 System.out.println();
@@ -77,6 +69,7 @@ public class DriverCode {
                     System.out.print("Album name to search: ");
                     input = reader.readLine();
                     Query.album(input);
+                    break;
                 //Label
                 case 4:
                     System.out.print("Label name to search: ");
@@ -151,9 +144,13 @@ public class DriverCode {
                         System.out.println("Invalid Input");
                     }
                     break;
+                case 17:
+                        break;
+                case 18:
+                    break;
 
                 default:
-                    System.out.println("Please enter an option 0-9");
+                    System.out.println("Please enter an option 0-18");
                     break;
             }
             System.out.println();

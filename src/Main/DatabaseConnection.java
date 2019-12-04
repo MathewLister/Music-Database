@@ -9,7 +9,7 @@ public class DatabaseConnection {
     private static final String pass = "Password0*";
     private static final String url = "jdbc:mysql://leia.cs.spu.edu/bettagj_db?serverTimezone=UTC";
 
-    public static Connection getConnection()
+    static Connection getConnection()
     {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

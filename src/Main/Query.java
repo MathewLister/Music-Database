@@ -11,7 +11,7 @@ import java.util.TimeZone;
 
 public class Query {
     //Shows all songs w/ the name searched
-    public static void song (String userInput) {
+    static void song(String userInput) {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
@@ -45,7 +45,7 @@ public class Query {
         }
     }
     //Shows artist discography
-    public static void artist (String userInput)
+    static void artist(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -72,7 +72,7 @@ public class Query {
         }
     }
     //Show all the songs in a album
-    public static void album (String userInput)
+    static void album(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -98,7 +98,7 @@ public class Query {
         }
     }
 
-    public static void label (String userInput)
+    static void label(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -124,7 +124,7 @@ public class Query {
         }
     }
 
-    public static void playList (String userInput)
+    static void playList(String userInput)
     {
         int duration;
         String tmp;
@@ -152,7 +152,7 @@ public class Query {
                         System.out.println(rs1.getString(1) + " || " + tmp);
                     }
                 }
-                System.out.println("---------------------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------------\n");
                 System.out.println("Artist || Song || Album || Song Duration");
                 System.out.println("---------------------------------------------------------------------------------------------");
                 while(rs2.next()) {
@@ -169,7 +169,7 @@ public class Query {
         }
     }
 
-    public static void concert (String userInput)
+    static void concert(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -197,7 +197,7 @@ public class Query {
         playList(userInput);
     }
 
-    public static void genre (String userInput)
+    static void genre(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         String query = "SELECT artist_name, album_name, genre, album_date, album_id FROM album JOIN artist ON album.artist_id = artist.artist_id WHERE album.genre LIKE '%" + userInput + "%';";
@@ -223,7 +223,7 @@ public class Query {
         }
     }
     
-    public static void getAllSongs ()
+    static void getAllSongs()
     {
         String getSongs = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name, al.album_name, s.song_id ORDER BY a.artist_name ASC;";
         String myFormat = "| %-3s | %-50s | %-30s | %-50s | %-30s |%n";
@@ -247,7 +247,7 @@ public class Query {
         }
     }
 
-    public static void getAllArtists ()
+    static void getAllArtists()
     {
         String getArtists = "SELECT artist_id, artist_name FROM artist";
         String myFormat = "| %-3s | %-30s |%n";
@@ -272,7 +272,7 @@ public class Query {
 
     }
 
-    public static void getAllAlbums ()
+    static void getAllAlbums()
     {
         String getAlbums = "SELECT a.artist_name, al.album_name, al.album_id FROM artist a JOIN album al ON a.artist_id = al.artist_id GROUP BY a.artist_name, al.album_name, al.album_id ORDER BY a.artist_name;";
         String myFormat = "| %-30s | %-50s | %-3s |%n";
@@ -294,7 +294,7 @@ public class Query {
         }
     }
 
-    public static void getAllLabels ()
+    static void getAllLabels()
     {
         String getLabels = "SELECT label_id, label_name FROM label;";
         String myFormat = "| %-3s | %-30s |%n";
@@ -318,7 +318,7 @@ public class Query {
         }
     }
 
-    public static void getAllPlaylists ()
+    static void getAllPlaylists()
     {
         String getPlaylists = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id GROUP BY p.playlist_name;";
         String myFormat = "| %-30s | %-10s |%n";
@@ -352,7 +352,7 @@ public class Query {
         }
     }
 
-    public static void getAllConcerts ()
+    static void getAllConcerts()
     {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -378,7 +378,7 @@ public class Query {
         }
     }
 
-    public static void getAllGenres ()
+    static void getAllGenres()
     {
         String getGenres = "SELECT DISTINCT genre FROM album;";
         Connection con = DatabaseConnection.getConnection();
@@ -402,7 +402,7 @@ public class Query {
         }
     }
 
-    public static void getAllMembers()
+    static void getAllMembers()
     {
         String getMembers = "SELECT p.first_name, p.last_name, a.artist_name FROM person_artist pa JOIN artist a ON pa.artist_id = a.artist_id JOIN person p ON pa.person_id = p.person_id GROUP BY a.artist_name, p.last_name, p.first_name ORDER BY a.artist_name ASC;";
         String myFormat = "| %-30s | %-30s | %-30s |%n";
@@ -426,7 +426,7 @@ public class Query {
         }
     }
 
-    public static String insertSongIntoPlaylist (int songID, int playlistID)
+    static String insertSongIntoPlaylist(int songID, int playlistID)
     {
         String returnMessage = "Could not complete insertion";
         String checkQuery = "SELECT playlist_song_id FROM playlist_song WHERE song_id = " + songID + " AND playlist_id = " + playlistID + ";";
