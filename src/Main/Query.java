@@ -437,12 +437,14 @@ public class Query {
                     PreparedStatement ps = con.prepareStatement(removePlaylist);
                     int ret = ps.executeUpdate();
                     System.out.println("Return from delete = " + ret);
+                    returnMessage = "Successful Deletion";
                 } else {
                     returnMessage = "Playlist is a concert. please delete concert first";
                 }
             } else {
                 returnMessage = "Playlist does not exist";
             }
+            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
