@@ -7,6 +7,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DriverCode {
+    //Validates that option input is within our case range 0-...
+    public static boolean ValidOption(int choice) {
+        if ((choice < 0) || (choice > 19)) {
+            return false;
+        }
+        return true;
+    }
+
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
@@ -41,7 +49,7 @@ public class DriverCode {
 
             System.out.println();
 
-            if ((option >= 0) && (option <= 19)) { // check if option is a valid option in menu
+            if (!ValidOption(option)) { // check if option is a valid option in menu
                 System.out.println("Invalid input! Please try again");
                 System.out.println("-------------------------------------------------------------------\n");
                 System.out.println();
@@ -69,7 +77,6 @@ public class DriverCode {
                     System.out.print("Album name to search: ");
                     input = reader.readLine();
                     Query.album(input);
-                    break;
                 //Label
                 case 4:
                     System.out.print("Label name to search: ");
@@ -84,9 +91,6 @@ public class DriverCode {
                     break;
                 //Concert
                 case 6:
-                    System.out.print("Concert name to search: ");
-                    input = reader.readLine();
-                    Query.concert(input);
                     break;
                 //Genre
                 case 7:
@@ -96,6 +100,7 @@ public class DriverCode {
                     break;
                 case 8:
                     // get all songs
+                    // currently not working, waiting on arias' reply
                     Query.getAllSongs();
                     break;
                 case 9:
@@ -145,13 +150,6 @@ public class DriverCode {
                     }
                     break;
                 case 17:
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        break;
-                case 18:
-=======
-=======
->>>>>>> master
                     //insert a concert
                     break;
                 case 18:
@@ -171,16 +169,13 @@ public class DriverCode {
                     //delete concert
 
 
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
                     break;
 
                 default:
-                    System.out.println("Please enter an option 0-18");
+                    System.out.println("Please enter an option 0-9");
                     break;
             }
+            System.out.println("-------------------------------------------------------------------\n");
             System.out.println();
         }
     }
