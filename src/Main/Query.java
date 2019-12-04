@@ -240,7 +240,25 @@ public class Query {
 
     public static void getAllLabels ()
     {
-
+        String getLabels = "SELECT label_id, label_name FROM label;";
+        String myFormat = "| %-3s | %-30s |%n";
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getLabels);
+            if(rs.next()) {
+                System.out.format(myFormat, "ID", "Label Name");
+                System.out.println("----------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2));
+                } while (rs.next());
+            } else {
+                System.out.println("No Labels Found");
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getAllPlaylists ()
