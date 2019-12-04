@@ -1,5 +1,6 @@
 package Main;
 
+import javax.swing.plaf.nimbus.State;
 import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -116,25 +117,35 @@ public class Query {
         int duration;
         String tmp;
         Connection con = DatabaseConnection.getConnection();
-        String query = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
+        String getPlayList = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
+        String showSongs = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab, playlist_song playSong, playlist play WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND playSong.playlist_id = play.playlist_id AND playSong.song_id = s.song_id AND play.playlist_name LIKE '%" + userInput + "%';";
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Playlist Name: || Duration: HH:mm:ss");
-                    while(rs.next()) {
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
 
-                        tmp = rs.getString(2);
+            ResultSet rs1 = stmt1.executeQuery(getPlayList);
+            ResultSet rs2 = stmt2.executeQuery(showSongs);
+            if (rs1 != null && rs2 != null) {
+                if(rs1.isBeforeFirst()) {
+                    System.out.println("Playlist Name: || Duration: HH:mm:ss");
+                    while(rs1.next()) {
+
+                        tmp = rs1.getString(2);
                         duration = Integer.parseInt(tmp);
                         Date date = new Date(duration * 1000L);
                         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                         df.setTimeZone(TimeZone.getTimeZone("GMT"));
                         tmp = df.format(date);
-                        System.out.println(rs.getString(1) + " || " + tmp);
+                        System.out.println(rs1.getString(1) + " || " + tmp);
                     }
                 }
-            } else {
+                System.out.println("Artist || Song || Album || Song Duration");
+                System.out.println("------------------------------------------------------");
+                while(rs2.next()) {
+                    System.out.println(rs2.getString(1) + " || " + rs2.getString(2) + " || " + rs2.getString(3) + " || " + rs2.getString(4));
+                }
+            }
+            else {
                 System.out.println("Empty Set");
             }
             con.close();
