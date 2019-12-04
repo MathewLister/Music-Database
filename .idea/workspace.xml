@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fafd3b6-7cf4-4403-92ea-74c744ad4533" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/Main/DriverCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/DriverCode.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> mathew
       <change beforePath="$PROJECT_DIR$/src/Main/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Query.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

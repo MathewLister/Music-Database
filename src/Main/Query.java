@@ -9,10 +9,11 @@ import java.util.Scanner;
 import java.util.TimeZone;
 
 public class Query {
-    public static void song (String userInput) throws SQLException {
-        Connection connection = DatabaseConnection.getConnection();
+    //Shows all songs w/ the name searched
+    public static void song (String userInput) {
+        Connection con = DatabaseConnection.getConnection();
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = con.createStatement();
             String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%';";
             ResultSet rs = stmt.executeQuery(query);
 
@@ -26,15 +27,36 @@ public class Query {
             else {
                 System.out.println("Could Not Be Found");
             }
-            connection.close();
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    public static void artist (Scanner userInput)
+    //Shows artist discography
+    public static void artist (String userInput)
     {
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getArtist = "SELECT a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND a.artist_name LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(getArtist);
 
+            if(rs != null) {
+                if(rs.isBeforeFirst()) {
+                    System.out.println("Artist || Album || Song Name || Song Duration");
+                    System.out.println("------------------------------------------------------");
+                    while(rs.next()) {
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
+                    }
+                }
+            }
+            else {
+                System.out.println("Artist" + userInput + "Could Not Be Found");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void album (Scanner userInput)
