@@ -154,6 +154,7 @@ public class DriverCode {
                     break;
                 case 18:
                     //delete playlist
+                    // DON"T TEST UNTIL INSERT PLAYLIST WORKS
                     playlistID = -1;
                     try {
                         System.out.print("Enter playlist ID (integer): ");
