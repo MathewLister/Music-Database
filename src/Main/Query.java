@@ -111,14 +111,15 @@ public class Query {
     public static void getAllSongs ()
     {
         String getSongs = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, al.genre FROM (artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s ON sa.song_id = s.song_id) JOIN album al ON s.album_id = al.album_id GROUP BY a.artist_name, s.song_name, al.album_name, s.song_id ORDER BY a.artist_name ASC;";
+        String myFormat = "| %-3s | %-50s | %-30s | %-50s | %-30s |%n";
         Connection con = DatabaseConnection.getConnection();
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(getSongs);
             if(rs.next()) {
-                System.out.println("Song ID || Song Name || Artist Name || Album Name || Genre");
+                System.out.format(myFormat, "ID", "Song Name", "Artist Name", "Album Name", "Genre");
                 do{
-                    System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4) + " || " + rs.getString(5));
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 } while(rs.next());
             } else {
                 System.out.println("Could Not Be Found");
@@ -132,14 +133,15 @@ public class Query {
     public static void getAllArtists ()
     {
         String getArtists = "SELECT artist_id, artist_name FROM artist";
+        String myFormat = "| %-3s | %-30s |%n";
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(getArtists);
             if(rs.next()) {
-                System.out.println("Artist ID || Artist Name");
+                System.out.format("+ ID  + Artist Name                    +%n");
                 do {
-                    System.out.println(rs.getString(1) + " || " + rs.getString(2));
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2));
                 } while (rs.next());
             } else {
                 System.out.println("No Artists");
@@ -153,7 +155,7 @@ public class Query {
 
     public static void getAllAlbums ()
     {
-
+        String getAlbums = "";
     }
 
     public static void getAllLabels ()
