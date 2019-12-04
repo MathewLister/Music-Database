@@ -19,8 +19,10 @@ public class Query {
 
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
+                    System.out.println("Artist || Song || Album || Song Duration");
+                    System.out.println("------------------------------------------------------");
                     while(rs.next()) {
-                        System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
                     }
                 }
             }
@@ -43,7 +45,7 @@ public class Query {
 
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
-                    System.out.println("Artist || Album || Song Name || Song Duration");
+                    System.out.println("Artist || Album || Song || Song Duration");
                     System.out.println("------------------------------------------------------");
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
@@ -58,10 +60,30 @@ public class Query {
             ex.printStackTrace();
         }
     }
-
-    public static void album (Scanner userInput)
+    //Show all the songs in a album
+    public static void album (String userInput)
     {
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getAlbum = "SELECT a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND al.album_name LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(getAlbum);
+            if(rs != null) {
+                if(rs.isBeforeFirst()) {
+                    System.out.println("Artist || Album || Song || Song Duration");
+                    System.out.println("------------------------------------------------------");
+                    while(rs.next()) {
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
+                    }
+                }
+            }
+            else {
+                System.out.println("Album" + userInput + "Could Not Be Found");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void label (Scanner userInput)

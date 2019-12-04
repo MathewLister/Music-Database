@@ -69,13 +69,15 @@ public class DriverCode {
                 //Artist
                 //Not working!
                 case 2:
-                    System.out.print(("Artist name to search: "));
+                    System.out.print("Artist name to search: ");
                     input = reader.readLine();
                     Query.artist(input);
                     break;
                 //Album
                 case 3:
-                    break;
+                    System.out.print("Album name to search: ");
+                    input = reader.readLine();
+                    Query.album(input);
                 //Label
                 case 4:
                     break;
