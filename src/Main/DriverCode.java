@@ -128,7 +128,7 @@ public class DriverCode {
                     break;
                 case 16:
                     // insert song in playlist
-                    int songID, playlistID;
+                    int songID = -1, playlistID = -1;
                     String output;
                     try{
                         System.out.print("Song ID (integer): ");
@@ -145,8 +145,30 @@ public class DriverCode {
                     }
                     break;
                 case 17:
+<<<<<<< HEAD
                         break;
                 case 18:
+=======
+                    //insert a concert
+                    break;
+                case 18:
+                    //delete playlist
+                    playlistID = -1;
+                    try {
+                        System.out.print("Enter playlist ID (integer): ");
+                        input = reader.readLine();
+                        playlistID = Integer.parseInt(input);
+                        System.out.println(Query.deletePlaylist(playlistID));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Invalid Input");
+                    }
+                    break;
+                case 19:
+                    //delete concert
+
+
+>>>>>>> master
                     break;
 
                 default:

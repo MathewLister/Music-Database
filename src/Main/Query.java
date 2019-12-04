@@ -469,9 +469,27 @@ public class Query {
         //Working on it...
     }
 
-    public static void deletePlaylist (String userInput)
+    public static String deletePlaylist (int userInput)
     {
+        String playlistIsConcert = "SELECT * FROM concert c WHERE c.playlist_id = " + userInput + ";";
+        String removePlaylist = "DELETE FROM playlist WHERE playlist_id = " + userInput + ";";
+        String returnMessage = "Could not delete";
+        Connection con = DatabaseConnection.getConnection();
 
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(playlistIsConcert);
+            if(!rs.next()) {
+                
+            } else {
+                returnMessage = "Playlist is a concert. Please Delete concert first";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return returnMessage;
     }
 
     public static void deleteConcert (String userInput)
