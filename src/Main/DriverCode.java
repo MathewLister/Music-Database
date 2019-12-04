@@ -67,7 +67,6 @@ public class DriverCode {
                     Query.song(input);
                     break;
                 //Artist
-                //Not working!
                 case 2:
                     System.out.print("Artist name to search: ");
                     input = reader.readLine();
@@ -80,6 +79,9 @@ public class DriverCode {
                     Query.album(input);
                 //Label
                 case 4:
+                    System.out.print("Label name to search: ");
+                    input = reader.readLine();
+                    Query.label(input);
                     break;
                 //Play List
                 case 5:

@@ -86,9 +86,29 @@ public class Query {
         }
     }
 
-    public static void label (Scanner userInput)
+    public static void label (String userInput)
     {
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getAlbum = "SELECT l.label_name, al.album_name FROM label l, album al WHERE l.label_id = al.label_id AND l.label_name LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(getAlbum);
+            if(rs != null) {
+                if(rs.isBeforeFirst()) {
+                    System.out.println("Label || Album");
+                    System.out.println("---------------------------------------------");
+                    while(rs.next()) {
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2));
+                    }
+                }
+            }
+            else {
+                System.out.println("Label " + userInput + "Could Not Be Found");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void playList (String userInput)
