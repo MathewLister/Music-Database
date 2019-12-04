@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DriverCode {
     //Validates that option input is within our case range 0-...
     public static boolean ValidOption(int choice) {
-        if ((choice < 0) || (choice > 18)) {
+        if ((choice < 0) || (choice > 19)) {
             return false;
         }
         return true;
