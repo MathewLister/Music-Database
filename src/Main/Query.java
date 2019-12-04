@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.TimeZone;
 
 public class Query {
+    //Shows all songs w/ the name searched
     public static void song (String userInput) {
         Connection con = DatabaseConnection.getConnection();
         try {
@@ -30,19 +31,21 @@ public class Query {
             ex.printStackTrace();
         }
     }
-    //Not working!
+    //Shows artist discography
     public static void artist (String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
-            String query = "SELECT artist_name FROM person_artist pa, artist a, person p WHERE pa.person_id = p.person_id AND pa.artist_id = a.artist_id AND a.artist_name LIKE '%" + userInput + "%';";
-            ResultSet rs = stmt.executeQuery(query);
+            String getArtist = "SELECT a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND a.artist_name LIKE '%" + userInput + "%';";
+            ResultSet rs = stmt.executeQuery(getArtist);
 
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
+                    System.out.println("Artist || Album || Song Name || Song Duration");
+                    System.out.println("------------------------------------------------------");
                     while(rs.next()) {
-                        System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
                     }
                 }
             }
