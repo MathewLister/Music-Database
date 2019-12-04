@@ -1,5 +1,7 @@
 package Main;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
 import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -416,8 +418,10 @@ public class Query {
 
     }
 
+    // don't test until insert playlist works!!
     public static String deletePlaylist (int userInput)
     {
+        String isPlaylist = "SELECT * FROM playlist WHERE playlist_id = " + userInput + ";";
         String playlistIsConcert = "SELECT * FROM concert c WHERE c.playlist_id = " + userInput + ";";
         String removePlaylist = "DELETE FROM playlist WHERE playlist_id = " + userInput + ";";
         String returnMessage = "Could not delete";
@@ -425,16 +429,23 @@ public class Query {
 
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(playlistIsConcert);
-            if(!rs.next()) {
-                
+            ResultSet rs = stmt.executeQuery(isPlaylist);
+            if(rs.next()) {
+                rs.close();
+                rs = stmt.executeQuery(playlistIsConcert);
+                if(!rs.next()) {
+                    PreparedStatement ps = con.prepareStatement(removePlaylist);
+                    int ret = ps.executeUpdate();
+                    System.out.println("Return from delete = " + ret);
+                } else {
+                    returnMessage = "Playlist is a concert. please delete concert first";
+                }
             } else {
-                returnMessage = "Playlist is a concert. Please Delete concert first";
+                returnMessage = "Playlist does not exist";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         return returnMessage;
     }
