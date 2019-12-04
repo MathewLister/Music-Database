@@ -16,18 +16,26 @@ public class Query {
         try {
             Statement stmt = con.createStatement();
             String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%';";
+            String myFormat = "| %-30s | %-50s | %-50s | %-10s |%n";
+            String tmp;
+            Date date;
+            SimpleDateFormat df;
+            int duration;
             ResultSet rs = stmt.executeQuery(query);
 
-            if(rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Artist || Song || Album || Song Duration");
-                    System.out.println("------------------------------------------------------");
-                    while(rs.next()) {
-                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
-                    }
-                }
-            }
-            else {
+            if(rs.next()) {
+                System.out.format(myFormat, "Artist Name", "Song Name", "Album Name", "HH:mm:ss");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                do {
+                    tmp = rs.getString(4);
+                    duration = Integer.parseInt(tmp);
+                    date = new Date(duration * 1000L);
+                    df = new SimpleDateFormat("HH:mm:ss");
+                    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    tmp = df.format(date);
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), tmp);
+                } while(rs.next());
+            } else {
                 System.out.println("Could Not Be Found");
             }
             con.close();
@@ -296,7 +304,35 @@ public class Query {
 
     public static void getAllPlaylists ()
     {
-
+        String getPlaylists = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id GROUP BY p.playlist_name;";
+        String myFormat = "| %-30s | %-10s |%n";
+        String tmp;
+        Date date;
+        SimpleDateFormat df;
+        int duration;
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getPlaylists);
+            if(rs.next()) {
+                System.out.format(myFormat, "Playlist Name", "HH:mm:ss");
+                System.out.println("-----------------------------------------------");
+                do {
+                    tmp = rs.getString(2);
+                    duration = Integer.parseInt(tmp);
+                    date = new Date(duration * 1000L);
+                    df = new SimpleDateFormat("HH:mm:ss");
+                    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    tmp = df.format(date);
+                    System.out.format(myFormat, rs.getString(1), tmp);
+                } while (rs.next());
+            } else {
+                System.out.println("No playlists found");
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getAllConcerts ()
