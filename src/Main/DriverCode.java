@@ -156,7 +156,6 @@ public class DriverCode {
                     System.out.println("Please enter an option 0-9");
                     break;
             }
-            System.out.println("-------------------------------------------------------------------\n");
             System.out.println();
         }
     }

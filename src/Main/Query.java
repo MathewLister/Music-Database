@@ -25,7 +25,7 @@ public class Query {
 
             if(rs.next()) {
                 System.out.format(myFormat, "Artist Name", "Song Name", "Album Name", "HH:mm:ss");
-                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------------");;
                 do {
                     tmp = rs.getString(4);
                     duration = Integer.parseInt(tmp);
@@ -35,6 +35,7 @@ public class Query {
                     tmp = df.format(date);
                     System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), tmp);
                 } while(rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------");
             } else {
                 System.out.println("Could Not Be Found");
             }
@@ -55,11 +56,12 @@ public class Query {
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
                     System.out.println("Artist || Album || Song || Song Duration");
-                    System.out.println("------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------");;
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
                     }
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Artist" + userInput + "Could Not Be Found");
@@ -80,11 +82,12 @@ public class Query {
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
                     System.out.println("Artist || Album || Song || Song Duration");
-                    System.out.println("------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------");
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
                     }
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Album" + userInput + "Could Not Be Found");
@@ -105,11 +108,12 @@ public class Query {
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
                     System.out.println("Label || Album");
-                    System.out.println("---------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------");;
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2));
                     }
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Label " + userInput + "Could Not Be Found");
@@ -136,6 +140,7 @@ public class Query {
             if (rs1 != null && rs2 != null) {
                 if(rs1.isBeforeFirst()) {
                     System.out.println("Playlist Name: || Duration: HH:mm:ss");
+                    System.out.println("---------------------------------------------------------------------------------------------");
                     while(rs1.next()) {
 
                         tmp = rs1.getString(2);
@@ -147,11 +152,13 @@ public class Query {
                         System.out.println(rs1.getString(1) + " || " + tmp);
                     }
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
                 System.out.println("Artist || Song || Album || Song Duration");
-                System.out.println("------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------------");
                 while(rs2.next()) {
                     System.out.println(rs2.getString(1) + " || " + rs2.getString(2) + " || " + rs2.getString(3) + " || " + rs2.getString(4));
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Empty Set");
@@ -172,12 +179,13 @@ public class Query {
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
                     System.out.println("Concert || Date || Location");
-                    System.out.println("---------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------");
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3));
                     }
                     System.out.println("Songs played:");
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Concert " + userInput + "Could Not Be Found");
@@ -199,10 +207,12 @@ public class Query {
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
                     System.out.println("Artist || Album || Genre || Album Date || Album ID");
+                    System.out.println("---------------------------------------------------------------------------------------------");
                     while(rs.next()) {
                         System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4) + " || " + rs.getString(5));
                     }
                 }
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Could Not Be Found");
@@ -223,9 +233,11 @@ public class Query {
             ResultSet rs = stmt.executeQuery(getSongs);
             if(rs.next()) {
                 System.out.format(myFormat, "ID", "Song Name", "Artist Name", "Album Name", "Genre");
+                System.out.println("---------------------------------------------------------------------------------------------");
                 do{
                     System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 } while(rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------");
             } else {
                 System.out.println("Could Not Be Found");
             }
@@ -244,10 +256,12 @@ public class Query {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(getArtists);
             if(rs.next()) {
-                System.out.format("+ ID  + Artist Name                    +%n");
+                System.out.format("+ ID  + Artist Name");
+                System.out.println("---------------------------------------------------------------------------------------------");
                 do {
                     System.out.format(myFormat, rs.getString(1), rs.getString(2));
                 } while (rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------");
             } else {
                 System.out.println("No Artists");
             }
@@ -272,6 +286,7 @@ public class Query {
                 do {
                     System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
                 } while(rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             con.close();
         } catch (Exception e) {
@@ -293,6 +308,7 @@ public class Query {
                 do {
                     System.out.format(myFormat, rs.getString(1), rs.getString(2));
                 } while (rs.next());
+                System.out.println("----------------------------------------");
             } else {
                 System.out.println("No Labels Found");
             }
@@ -326,6 +342,7 @@ public class Query {
                     tmp = df.format(date);
                     System.out.format(myFormat, rs.getString(1), tmp);
                 } while (rs.next());
+                System.out.println("-----------------------------------------------");
             } else {
                 System.out.println("No playlists found");
             }
@@ -337,7 +354,28 @@ public class Query {
 
     public static void getAllConcerts ()
     {
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String getConcert = "SELECT concert_name, concert_date, concert_location FROM concert;";
+            String myFormat = "| %-30s | %-30s | %-30s |%n";
+            ResultSet rs = stmt.executeQuery(getConcert);
+                if(rs.next()) {
+                    System.out.format(myFormat, "Concert", "Date", "Location");
+                    System.out.println("----------------------------------------------------------------------------------------------------");
+                    do {
+                        System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
+                    } while (rs.next());
+                    System.out.println("----------------------------------------------------------------------------------------------------");
+                }
+            else {
+                System.out.println("No concert found");
+            }
+            con.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getAllGenres ()
@@ -349,9 +387,11 @@ public class Query {
             ResultSet rs = stmt.executeQuery(getGenres);
             if(rs.next()) {
                 System.out.println("Genres: ");
+                System.out.println("---------------------------------------------------------------------------------------------");
                 do{
                     System.out.println(rs.getString(1));
                 } while (rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("No Genres Found");
@@ -376,6 +416,7 @@ public class Query {
                 do{
                     System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
                 } while (rs.next());
+                System.out.println("----------------------------------------------------------------------------------------------------");
             } else {
                 System.out.println("Could Not Find any Members");
             }
@@ -425,7 +466,7 @@ public class Query {
 
     public static void insertConcert (String userInput)
     {
-
+        //Working on it...
     }
 
     public static void deletePlaylist (String userInput)
