@@ -51,21 +51,26 @@ public class Query {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
-            String getArtist = "SELECT a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND a.artist_name LIKE '%" + userInput + "%';";
+            String getArtist = "SELECT a.artist_id, a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND a.artist_name LIKE '%" + userInput + "%';";
+            String myFormat = "| %-3s | %-30s | %-50s | %-50s | %-10s |%n";
+            String tmp;
+            Date date;
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+            int duration;
             ResultSet rs = stmt.executeQuery(getArtist);
 
-            if(rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Artist || Album || Song || Song Duration");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    while(rs.next()) {
-                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
-                    }
-                }
+            if(rs.next()) {
+                System.out.format(myFormat, "ID", "Artist Name", "Album Name", "Song Name", "HH:mm:ss");
                 System.out.println("----------------------------------------------------------------------------------------------------");
-            }
-            else {
-                System.out.println("Artist" + userInput + "Could Not Be Found");
+                do {
+                    duration = rs.getInt(5);
+                    date  = new Date(duration * 1000L);
+                    tmp = df.format(date);
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), tmp);
+                } while (rs.next());
+            } else {
+                System.out.println("No Discography Found");
             }
             con.close();
         } catch (SQLException ex) {
