@@ -467,8 +467,8 @@ public class Query {
     public static String insertPlayList (String name)
     {
         String returnMessage = "Could not complete insertion";
-        String checkPlaylist = "SELECT * FROM playlist WHERE playlist_name = " + name + ";";
-        String insertQuery = "INSERT INTO playlist (playlist_name) VALUES (" + name + ");";
+        String checkPlaylist = "SELECT * FROM playlist WHERE playlist_name = '" + name + "';";
+        String insertQuery = "INSERT INTO playlist (playlist_name) VALUES ('" + name + "');";
 
         int option = 100;
         Connection con = DatabaseConnection.getConnection();
