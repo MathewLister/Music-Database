@@ -288,6 +288,7 @@ public class Query {
     static void getAllPlaylists()
     {
         String getPlaylists = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id GROUP BY p.playlist_name;";
+        String getEmptyPlaylists = "SELECT playlist_name FROM playlist WHERE playlist_id NOT IN (SELECT p.playlist_id FROM playlist p JOIN playlist_song ps on p.playlist_id = ps.playlist_id JOIN song s ON ps.song_id = s.song_id);";
         String myFormat = "| %-30s | %-10s |%n";
         String tmp;
         Date date;
@@ -295,20 +296,26 @@ public class Query {
         int duration;
         Connection con = DatabaseConnection.getConnection();
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(getPlaylists);
-            if(rs.next()) {
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
+            ResultSet rs1 = stmt1.executeQuery(getPlaylists);
+            ResultSet rs2 = stmt2.executeQuery(getEmptyPlaylists);
+
+            if(rs1.next() && rs2.next()) {
                 System.out.format(myFormat, "Playlist Name", "HH:mm:ss");
                 System.out.println("----------------------------------------------------------------------------------------------------");
                 do {
-                    tmp = rs.getString(2);
+                    System.out.format(myFormat, rs2.getString(1), "00:00:00");
+                } while (rs2.next());
+                do {
+                    tmp = rs1.getString(2);
                     duration = Integer.parseInt(tmp);
                     date = new Date(duration * 1000L);
                     df = new SimpleDateFormat("HH:mm:ss");
                     df.setTimeZone(TimeZone.getTimeZone("GMT"));
                     tmp = df.format(date);
-                    System.out.format(myFormat, rs.getString(1), tmp);
-                } while (rs.next());
+                    System.out.format(myFormat, rs1.getString(1), tmp);
+                } while (rs1.next());
                 System.out.println("----------------------------------------------------------------------------------------------------");
             } else {
                 System.out.println("No playlists found");
