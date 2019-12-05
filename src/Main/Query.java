@@ -294,6 +294,7 @@ public class Query {
         Date date;
         SimpleDateFormat df;
         int duration;
+        boolean foundPlaylist = false;
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt1 = con.createStatement();
@@ -301,12 +302,15 @@ public class Query {
             ResultSet rs1 = stmt1.executeQuery(getPlaylists);
             ResultSet rs2 = stmt2.executeQuery(getEmptyPlaylists);
 
-            if(rs1.next() && rs2.next()) {
-                System.out.format(myFormat, "Playlist Name", "HH:mm:ss");
-                System.out.println("----------------------------------------------------------------------------------------------------");
+            System.out.format(myFormat, "Playlist Name", "HH:mm:ss");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            if(rs2.next()) {
                 do {
                     System.out.format(myFormat, rs2.getString(1), "00:00:00");
                 } while (rs2.next());
+                foundPlaylist = true;
+            }
+            if(rs1.next()) {
                 do {
                     tmp = rs1.getString(2);
                     duration = Integer.parseInt(tmp);
@@ -316,10 +320,12 @@ public class Query {
                     tmp = df.format(date);
                     System.out.format(myFormat, rs1.getString(1), tmp);
                 } while (rs1.next());
-                System.out.println("----------------------------------------------------------------------------------------------------");
-            } else {
-                System.out.println("No playlists found");
+                foundPlaylist = true;
             }
+            if(!foundPlaylist) {
+                System.out.println("No Playlists Found");
+            }
+            System.out.println("----------------------------------------------------------------------------------------------------");
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
