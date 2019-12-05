@@ -1,12 +1,7 @@
 package Main;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-
-import javax.xml.crypto.Data;
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -133,38 +128,41 @@ public class Query {
         int duration;
         String tmp;
         Connection con = DatabaseConnection.getConnection();
-        String query = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
+        String getPlayList = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
+        String showSongs = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab, playlist_song playSong, playlist play WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND playSong.playlist_id = play.playlist_id AND playSong.song_id = s.song_id AND play.playlist_name LIKE '%" + userInput + "%';";
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Playlist Name: || Duration: HH:mm:ss");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    while(rs.next()) {
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
 
-                        tmp = rs.getString(2);
+            ResultSet rs1 = stmt1.executeQuery(getPlayList);
+            ResultSet rs2 = stmt2.executeQuery(showSongs);
+            if (rs1 != null && rs2 != null) {
+                if(rs1.isBeforeFirst()) {
+                    System.out.println("Playlist Name: || Duration: HH:mm:ss");
+                    while(rs1.next()) {
+
+                        tmp = rs1.getString(2);
                         duration = Integer.parseInt(tmp);
                         Date date = new Date(duration * 1000L);
                         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                         df.setTimeZone(TimeZone.getTimeZone("GMT"));
                         tmp = df.format(date);
-                        System.out.println(rs.getString(1) + " || " + tmp);
+                        System.out.println(rs1.getString(1) + " || " + tmp);
                     }
                 }
-                System.out.println("----------------------------------------------------------------------------------------------------");
-            } else {
+                System.out.println("Artist || Song || Album || Song Duration");
+                System.out.println("------------------------------------------------------");
+                while(rs2.next()) {
+                    System.out.println(rs2.getString(1) + " || " + rs2.getString(2) + " || " + rs2.getString(3) + " || " + rs2.getString(4));
+                }
+            }
+            else {
                 System.out.println("Empty Set");
             }
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void concert (Scanner userInput)
-    {
-
     }
 
     static void genre(String userInput)
@@ -434,9 +432,81 @@ public class Query {
         return returnMessage;
     }
 
-    public static void insertConcert (String userInput)
+    public static String insertConcert (String concertName, String concertDate, String concertLocation, String playListName)
     {
+        String returnMessage = "Could not complete insertion";
+        String checkConcert = "SELECT * FROM concert WHERE concert_name = " + concertName + ";";
+        String checkPlaylist = "SELECT * FROM playlist WHERE playlist_id = " + concertName + ";";
+        String insertQuery = "INSERT INTO concert (concert_date, concert_name, concert_location) VALUES (" + concertDate + ", " + concertName + ", " + concertLocation + ");";
 
+        Connection con = DatabaseConnection.getConnection();
+        try{
+            // create 3 separate statements because only one ResultSet object per Statement object can be open at the same time
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
+            Statement stmt3 = con.createStatement();
+            ResultSet rs1 = stmt1.executeQuery(checkConcert);
+            ResultSet rs2 = stmt3.executeQuery(checkPlaylist);
+
+            if(rs1.next()) { // check if concert is in the playlist table
+                returnMessage = "Concert already exists";
+            } else {
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                int ret = ps.executeUpdate(); // execute query and store return value in ret
+                //System.out.println("Return from Update: " + ret);
+                if(ret == 1) {
+                    insertPlayList(playListName);
+                }
+            }
+            con.close(); // all lower objects are closed when connection is closed
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnMessage;
+    }
+
+    public static String insertPlayList (String name)
+    {
+        String returnMessage = "Could not complete insertion";
+        String checkPlaylist = "SELECT * FROM playlist WHERE playlist_name = " + name + ";";
+        String insertQuery = "INSERT INTO playlist (playlist_name) VALUES (" + name + ");";
+
+        int option = 100;
+        Connection con = DatabaseConnection.getConnection();
+        try{
+            // create 3 separate statements because only one ResultSet object per Statement object can be open at the same time
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(checkPlaylist);
+            if(!rs.next()) { // check if playlist exists
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                int ret = ps.executeUpdate(); // execute query and store return value in ret
+                //System.out.println("Return from Update: " + ret);
+                if(ret == 1) {
+                    returnMessage = "Successful Insertion";
+                }
+            } else if(rs.next()) { // Found a play list w/ this name
+                System.out.println("There is already a playlist(s) with the name: " + name);
+                playList(name);
+                System.out.print("Press 0 to exit or 1 to add this play list anyways: ");
+                Scanner in = new Scanner(System.in);
+                option = in.nextInt();
+                if(option == 1) {
+                    PreparedStatement ps = con.prepareStatement(insertQuery);
+                    int ret = ps.executeUpdate(); // execute query and store return value in ret
+                    //System.out.println("Return from Update: " + ret);
+                    if(ret == 1) {
+                        returnMessage = "Successful Insertion";
+                    }
+                }
+                else {
+                    return "Thanks";
+                }
+            }
+            con.close(); // all lower objects are closed when connection is closed
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnMessage;
     }
 
     // don't test until insert playlist works!!

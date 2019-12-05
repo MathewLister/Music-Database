@@ -9,18 +9,15 @@ import java.util.Scanner;
 public class DriverCode {
     //Validates that option input is within our case range 0-...
     public static boolean ValidOption(int choice) {
-        if ((choice < 0) || (choice > 19)) {
-            return false;
-        }
-        return true;
+        return (choice >= 0) && (choice <= 19);
     }
 
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
         String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist\n";
-        String insert = "********INSERT********\n16. Insert Song in Playlist\n17. Insert a Concert";
-        String delete = "********DELETE********\n18. Delete a Playlist\n19. Delete a Concert";
+        String insert = "********INSERT********\n16. Inert Playlist\n17. Insert Song in Playlist\n18. Insert a Concert";
+        String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert";
         int option = 100;
         String input;
         //This grabs options from console
@@ -131,7 +128,12 @@ public class DriverCode {
                     // get members of every artist
                     Query.getAllMembers();
                     break;
-                case 16:
+                case 16: //NOT WORKING
+                    System.out.print("Enter playlist name: ");
+                    input = reader.readLine();
+                    Query.insertPlayList(input);
+                    break;
+                case 17:
                     // insert song in playlist
                     int songID = -1, playlistID = -1;
                     String output;
@@ -149,10 +151,15 @@ public class DriverCode {
                         System.out.println("Invalid Input");
                     }
                     break;
-                case 17:
+                case 18: //NOT WORKING
                     //insert a concert
+                    System.out.print("Enter Concert Name: ");
+                    System.out.print("Enter Concert Date: ");
+                    System.out.print("Enter Concert Location: ");
+
+                    System.out.print("Enter a name for a playlist of songs for the concert: ");
                     break;
-                case 18:
+                case 19:
                     //delete playlist
                     playlistID = -1;
                     try {
@@ -165,7 +172,7 @@ public class DriverCode {
                         System.out.println("Invalid Input");
                     }
                     break;
-                case 19:
+                case 20:
                     //delete concert
 
 
