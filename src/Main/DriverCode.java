@@ -168,8 +168,16 @@ public class DriverCode {
                     break;
                 case 19:
                     //delete concert
-
-
+                    Query.getAllConcerts();
+                    System.out.print("Enter Playlist ID to Delete: ");
+                    try {
+                        input = reader.readLine();
+                        playlistID = Integer.parseInt(input);
+                        System.out.println(Query.deleteConcert(playlistID));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Please Enter a Number");
+                    }
                     break;
 
                 default:
