@@ -108,18 +108,17 @@ public class Query {
         try {
             Statement stmt = con.createStatement();
             String getAlbum = "SELECT l.label_name, al.album_name FROM label l, album al WHERE l.label_id = al.label_id AND l.label_name LIKE '%" + userInput + "%';";
+            String myFormat = "| %-30s | %-50s |%n";
             ResultSet rs = stmt.executeQuery(getAlbum);
-            if(rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Label || Album");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    while(rs.next()) {
-                        System.out.println(rs.getString(1) + " || " + rs.getString(2));
-                    }
-                }
-                System.out.println("----------------------------------------------------------------------------------------------------");
-            }
-            else {
+
+            if(rs.next()) {
+                System.out.format(myFormat, "Label Name", "Album Name");
+                System.out.println("------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2));
+                } while (rs.next());
+                System.out.println("-------------------------------------------------------------------------");
+            } else {
                 System.out.println("Label " + userInput + "Could Not Be Found");
             }
             con.close();
