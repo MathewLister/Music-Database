@@ -349,7 +349,7 @@ public class Query {
 
     static void getAllGenres()
     {
-        String getGenres = "SELECT DISTINCT genre FROM album;";
+        String getGenres = "SELECT DISTINCT genre FROM album ORDER BY genre;";
         Connection con = DatabaseConnection.getConnection();
         try{
             Statement stmt = con.createStatement();
