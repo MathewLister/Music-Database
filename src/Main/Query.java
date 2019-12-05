@@ -454,6 +454,29 @@ public class Query {
 
     public static void deleteConcert (String userInput)
     {
+        String returnMessage = "Could not delete concert";
+        String concertExists = "SELECT concert_name FROM concert WHERE concert_id = " + userInput + ";";
+        String removeConcert = "DELETE FROM concert WHERE concert_id = " + userInput + ";";
+        String concertName;
 
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(concertExists);
+            if(rs.next()) {
+                concertName = rs.getString(1);
+                PreparedStatement ps = con.prepareStatement(removeConcert);
+                ps.executeUpdate();
+                returnMessage = "Successfully deleted: " + concertName;
+            } else {
+                returnMessage = "Concert Does not Exist";
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return returnMessage;
+    }
     }
 }
