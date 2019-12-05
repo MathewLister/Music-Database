@@ -11,7 +11,7 @@ public class Query {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
-            String query = "SELECT s.song_id, s.song_name, a.artist_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%' ORDER BY a.artist_name, ab.album_name, s.song_name;";
+            String query = "SELECT s.song_id, s.song_name, a.artist_name, al.album_name, s.song_duration FROM artist_song sa JOIN artist a ON sa.artist_id = a.artist_id JOIN song s on sa.song_id = s.song_id JOIN album al ON s.album_id = al.album_id WHERE s.song_name LIKE '%" + userInput + "%' ORDER BY a.artist_name, al.album_name, s.song_name;";
             String myFormat = "| %-3s | %-50s | %-30s | %-50s | %-10s |%n";
             String tmp;
             Date date;
