@@ -16,25 +16,23 @@ public class Query {
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
-            String query = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%';";
-            String myFormat = "| %-30s | %-50s | %-50s | %-10s |%n";
+            String query = "SELECT s.song_id, s.song_name, a.artist_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND s.song_name LIKE '%" + userInput + "%' ORDER BY a.artist_name, ab.album_name, s.song_name;";
+            String myFormat = "| %-3s | %-50s | %-30s | %-50s | %-10s |%n";
             String tmp;
             Date date;
-            SimpleDateFormat df;
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
             int duration;
             ResultSet rs = stmt.executeQuery(query);
 
             if(rs.next()) {
-                System.out.format(myFormat, "Artist Name", "Song Name", "Album Name", "HH:mm:ss");
+                System.out.format(myFormat, "ID", "Song Name", "Artist Name", "Album Name", "HH:mm:ss");
                 System.out.println("----------------------------------------------------------------------------------------------------");
                 do {
-                    tmp = rs.getString(4);
-                    duration = Integer.parseInt(tmp);
+                    duration = rs.getInt(5);
                     date = new Date(duration * 1000L);
-                    df = new SimpleDateFormat("HH:mm:ss");
-                    df.setTimeZone(TimeZone.getTimeZone("GMT"));
                     tmp = df.format(date);
-                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), tmp);
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), tmp);
                 } while(rs.next());
                 System.out.println("----------------------------------------------------------------------------------------------------");
             } else {
