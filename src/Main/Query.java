@@ -452,7 +452,7 @@ public class Query {
         return returnMessage;
     }
 
-    public static void deleteConcert (String userInput)
+    static String deleteConcert (int userInput)
     {
         String returnMessage = "Could not delete concert";
         String concertExists = "SELECT concert_name FROM concert WHERE concert_id = " + userInput + ";";
@@ -477,6 +477,5 @@ public class Query {
         }
 
         return returnMessage;
-    }
     }
 }
