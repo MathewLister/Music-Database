@@ -154,7 +154,6 @@ public class DriverCode {
                     break;
                 case 18:
                     //delete playlist
-                    // DON"T TEST UNTIL INSERT PLAYLIST WORKS
                     playlistID = -1;
                     try {
                         System.out.print("Enter playlist ID (integer): ");
@@ -168,23 +167,14 @@ public class DriverCode {
                     break;
                 case 19:
                     //delete concert
-                    Query.getAllConcerts();
-                    System.out.print("Enter Playlist ID to Delete: ");
-                    try {
-                        input = reader.readLine();
-                        playlistID = Integer.parseInt(input);
-                        System.out.println(Query.deleteConcert(playlistID));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Please Enter a Number");
-                    }
+
+
                     break;
 
                 default:
                     System.out.println("Please enter an option 0-9");
                     break;
             }
-            System.out.println("-------------------------------------------------------------------\n");
             System.out.println();
         }
     }
