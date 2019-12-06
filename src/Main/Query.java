@@ -489,14 +489,7 @@ public class Query {
             // create 3 separate statements because only one ResultSet object per Statement object can be open at the same time
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(checkPlaylist);
-            if(!rs.next()) { // check if playlist exists
-                PreparedStatement ps = con.prepareStatement(insertQuery);
-                int ret = ps.executeUpdate(); // execute query and store return value in ret
-                //System.out.println("Return from Update: " + ret);
-                if(ret == 1) {
-                    returnMessage = "Successful Insertion";
-                }
-            } else if(rs.next()) { // Found a play list w/ this name
+            if(rs.next()) { // check if playlist exists
                 System.out.println("There is already a playlist(s) with the name: " + name);
                 playList(name);
                 System.out.print("Press 0 to exit or 1 to add this play list anyways: ");
@@ -509,9 +502,16 @@ public class Query {
                     if(ret == 1) {
                         returnMessage = "Successful Insertion";
                     }
-                }
-                else {
-                    return "Thanks";
+                    else {
+                        return "Thanks";
+                    }
+            } else{ // Found a play list w/ this name
+                    PreparedStatement ps = con.prepareStatement(insertQuery);
+                    int ret = ps.executeUpdate(); // execute query and store return value in ret
+                    //System.out.println("Return from Update: " + ret);
+                    if(ret == 1) {
+                        returnMessage = "Successful Insertion";
+                    }
                 }
             }
             con.close(); // all lower objects are closed when connection is closed
