@@ -20,6 +20,7 @@ public class DriverCode {
         String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert";
         int option = 100;
         String input;
+        String output;
         //This grabs options from console
         Scanner in = new Scanner(System.in);
         //This grabs strings from console for queries
@@ -128,15 +129,16 @@ public class DriverCode {
                     // get members of every artist
                     Query.getAllMembers();
                     break;
-                case 16: //NOT WORKING
+                case 16:
+                    //Insert playlist
                     System.out.print("Enter playlist name: ");
                     input = reader.readLine();
-                    Query.insertPlayList(input);
+                    output = Query.insertPlayList(input);
+                    System.out.println(output);
                     break;
                 case 17:
                     // insert song in playlist
                     int songID = -1, playlistID = -1;
-                    String output;
                     try{
                         System.out.print("Song ID (integer): ");
                         input = reader.readLine();
@@ -174,8 +176,6 @@ public class DriverCode {
                     break;
                 case 20:
                     //delete concert
-
-
                     break;
 
                 default:

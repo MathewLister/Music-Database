@@ -499,19 +499,22 @@ public class Query {
                     PreparedStatement ps = con.prepareStatement(insertQuery);
                     int ret = ps.executeUpdate(); // execute query and store return value in ret
                     //System.out.println("Return from Update: " + ret);
-                    if(ret == 1) {
+                    if (ret == 1) {
                         returnMessage = "Successful Insertion";
                     }
-                    else {
-                        return "Thanks";
-                    }
+                }
+                else if (option == 0) {
+                    return returnMessage = "No playlist inserted";
+                }
+                else {
+                    return returnMessage;
+                }
             } else{ // Found a play list w/ this name
-                    PreparedStatement ps = con.prepareStatement(insertQuery);
-                    int ret = ps.executeUpdate(); // execute query and store return value in ret
-                    //System.out.println("Return from Update: " + ret);
-                    if(ret == 1) {
-                        returnMessage = "Successful Insertion";
-                    }
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                int ret = ps.executeUpdate(); // execute query and store return value in ret
+                //System.out.println("Return from Update: " + ret);
+                if(ret == 1) {
+                    returnMessage = "Successful Insertion";
                 }
             }
             con.close(); // all lower objects are closed when connection is closed
