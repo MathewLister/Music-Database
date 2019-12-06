@@ -155,11 +155,23 @@ public class DriverCode {
                     break;
                 case 18: //NOT WORKING
                     //insert a concert
+                    String name;
+                    String date;
+                    String location;
+                    String playName;
+
                     System.out.print("Enter Concert Name: ");
+                    name = reader.readLine();
                     System.out.print("Enter Concert Date: ");
+                    date = reader.readLine();
                     System.out.print("Enter Concert Location: ");
+                    location = reader.readLine();
 
                     System.out.print("Enter a name for a playlist of songs for the concert: ");
+                    playName = reader.readLine();
+
+                    output = Query.insertConcert(name, date, location, playName);
+                    System.out.println(output);
                     break;
                 case 19:
                     //delete playlist

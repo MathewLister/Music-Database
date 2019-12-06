@@ -486,7 +486,6 @@ public class Query {
         int option = 100;
         Connection con = DatabaseConnection.getConnection();
         try{
-            // create 3 separate statements because only one ResultSet object per Statement object can be open at the same time
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(checkPlaylist);
             if(rs.next()) { // check if playlist exists
@@ -498,7 +497,6 @@ public class Query {
                 if(option == 1) {
                     PreparedStatement ps = con.prepareStatement(insertQuery);
                     int ret = ps.executeUpdate(); // execute query and store return value in ret
-                    //System.out.println("Return from Update: " + ret);
                     if (ret == 1) {
                         returnMessage = "Successful Insertion";
                     }
@@ -509,7 +507,7 @@ public class Query {
                 else {
                     return returnMessage;
                 }
-            } else{ // Found a play list w/ this name
+            } else{ // No playlist found w/ this name
                 PreparedStatement ps = con.prepareStatement(insertQuery);
                 int ret = ps.executeUpdate(); // execute query and store return value in ret
                 //System.out.println("Return from Update: " + ret);
