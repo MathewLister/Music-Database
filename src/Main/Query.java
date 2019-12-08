@@ -80,20 +80,19 @@ public class Query {
     //Show all the songs in a album
     static void album(String userInput)
     {
+        String myFormat = "| %-30s | %-50s | %-50s | %-10s |%n";
         Connection con = DatabaseConnection.getConnection();
         try {
             Statement stmt = con.createStatement();
             String getAlbum = "SELECT a.artist_name, al.album_name, s.song_name, s.song_duration  FROM artist a, album al, artist_song artsong, song s WHERE a.artist_id = al.artist_id AND artsong.artist_id = a.artist_id AND artsong.song_id = s.song_id AND al.album_id = s.album_id AND al.album_name LIKE '%" + userInput + "%';";
             ResultSet rs = stmt.executeQuery(getAlbum);
-            if(rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.println("Artist || Album || Song || Song Duration");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    while(rs.next()) {
-                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4));
-                    }
-                }
-                System.out.println("----------------------------------------------------------------------------------------------------");
+            if(rs.next()) {
+                System.out.format(myFormat, "Artist", "Album", "Song", "HH:mm:ss");
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2),  rs.getString(3), rs.getString(4));
+                }while(rs.next());
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Album" + userInput + "Could Not Be Found");
@@ -136,31 +135,34 @@ public class Query {
         Connection con = DatabaseConnection.getConnection();
         String getPlayList = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
         String showSongs = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab, playlist_song playSong, playlist play WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND playSong.playlist_id = play.playlist_id AND playSong.song_id = s.song_id AND play.playlist_name LIKE '%" + userInput + "%';";
+        String myFormat1 = "| %-30s | %-10s |%n";
+        String myFormat2 = "| %-30s | %-50s | %-50s | %-10s |%n";
         try {
             Statement stmt1 = con.createStatement();
             Statement stmt2 = con.createStatement();
 
             ResultSet rs1 = stmt1.executeQuery(getPlayList);
             ResultSet rs2 = stmt2.executeQuery(showSongs);
-            if (rs1 != null && rs2 != null) {
-                if(rs1.isBeforeFirst()) {
-                    System.out.println("Playlist Name: || Duration: HH:mm:ss");
-                    while(rs1.next()) {
-
-                        tmp = rs1.getString(2);
-                        duration = Integer.parseInt(tmp);
-                        Date date = new Date(duration * 1000L);
-                        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-                        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-                        tmp = df.format(date);
-                        System.out.println(rs1.getString(1) + " || " + tmp);
+            if(rs1.next()) {
+                do {
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.format(myFormat1, "Playlist Name", "Duration: HH:mm:ss");
+                    tmp = rs1.getString(2);
+                    duration = Integer.parseInt(tmp);
+                    Date date = new Date(duration * 1000L);
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                    df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    tmp = df.format(date);
+                    System.out.format(myFormat1, rs1.getString(1), tmp);
+                    if(rs2.next()) {
+                        System.out.format(myFormat2, "Artist", "Song", "Album", "Song Duration");
+                        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        do {
+                            System.out.format(myFormat2, rs2.getString(1), rs2.getString(2), rs2.getString(3), rs2.getString(4));
+                        } while(rs2.next());
+                        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
                     }
-                }
-                System.out.println("Artist || Song || Album || Song Duration");
-                System.out.println("------------------------------------------------------");
-                while(rs2.next()) {
-                    System.out.println(rs2.getString(1) + " || " + rs2.getString(2) + " || " + rs2.getString(3) + " || " + rs2.getString(4));
-                }
+                } while(rs1.next());
             }
             else {
                 System.out.println("Empty Set");
@@ -174,19 +176,20 @@ public class Query {
     static void genre(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
+        String myFormat = "| %-30s | %-50s | %-30s | %-4s | %-3s |%n";
         String query = "SELECT artist_name, album_name, genre, album_date, album_id FROM album JOIN artist ON album.artist_id = artist.artist_id WHERE album.genre LIKE '%" + userInput + "%';";
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if(rs != null) {
                 if(rs.isBeforeFirst()) {
-                    System.out.println("Artist || Album || Genre || Album Date || Album ID");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
+                    System.out.format(myFormat, "Artist", "Album", "Genre", "Album Date", "Album ID");
+                    System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
                     while(rs.next()) {
-                        System.out.println(rs.getString(1) + " || " + rs.getString(2) + " || " + rs.getString(3) + " || " + rs.getString(4) + " || " + rs.getString(5));
+                        System.out.format(myFormat,rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                     }
                 }
-                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             }
             else {
                 System.out.println("Could Not Be Found");

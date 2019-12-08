@@ -14,7 +14,7 @@ public class DriverCode {
 
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
-        String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Play List\n6. Concert\n7. Genre";
+        String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Playlist\n6. Concert\n7. Genre";
         String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist\n";
         String insert = "********INSERT********\n16. Inert Playlist\n17. Insert Song in Playlist\n18. Insert a Concert";
         String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert";
@@ -76,6 +76,7 @@ public class DriverCode {
                     System.out.print("Album name to search: ");
                     input = reader.readLine();
                     Query.album(input);
+                    break;
                 //Label
                 case 4:
                     System.out.print("Label name to search: ");
