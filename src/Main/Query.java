@@ -588,37 +588,59 @@ public class Query {
     }
 
     // don't test until insert playlist works!!
-    static String deletePlaylist(int userInput)
+    static void deletePlaylist()
     {
-        String isPlaylist = "SELECT * FROM playlist WHERE playlist_id = " + userInput + ";";
-        String playlistIsConcert = "SELECT * FROM concert c WHERE c.playlist_id = " + userInput + ";";
-        String removePlaylist = "DELETE FROM playlist WHERE playlist_id = " + userInput + ";";
-        String returnMessage = "Could not delete";
-        Connection con = DatabaseConnection.getConnection();
+        Map<String, Integer> cache = new HashMap<>();
+        String getPlaylists = "SELECT playlist_name, playlist_id FROM playlist WHERE playlist_name LIKE ? ;";
+        String deletePlaylist = "DELETE FROM playlist WHERE playlist_id = ? ;";
+        String format = "| %-50s |%n";
+        Integer playlistID = null;
+        String input;
+        PreparedStatement ps;
+        ResultSet rs;
+
+        //This grabs options from console
+        Scanner in = new Scanner(System.in);
+        //This grabs strings from console for queries
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(isPlaylist);
+            Connection con = DatabaseConnection.getConnection();
+            System.out.print("Enter playlist name to delete: ");
+            input = reader.readLine();
+            ps = con.prepareStatement(getPlaylists);
+            ps.setString(1, "%" + input + "%");
+            rs = ps.executeQuery();
             if(rs.next()) {
+                System.out.format(format, "Playlist Name");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                do {
+                    cache.put(rs.getString(1), rs.getInt(2));
+                    System.out.format(format, rs.getString(1));
+                } while (rs.next());
+                ps.close();
                 rs.close();
-                rs = stmt.executeQuery(playlistIsConcert);
-                if(!rs.next()) {
-                    PreparedStatement ps = con.prepareStatement(removePlaylist);
-                    int ret = ps.executeUpdate();
-                    System.out.println("Return from delete = " + ret);
-                    returnMessage = "Successful Deletion";
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.print("Enter playlist name: ");
+                input = reader.readLine();
+                playlistID = cache.get(input);
+                if (playlistID != null) {
+                    ps = con.prepareStatement(deletePlaylist);
+                    ps.setInt(1, playlistID);
+                    ps.executeUpdate();
+                    System.out.println("Delete Successful");
                 } else {
-                    returnMessage = "Playlist is a concert. please delete concert first";
+                    System.out.println("Invalid Playlist");
+                    return;
                 }
             } else {
-                returnMessage = "Playlist does not exist";
+                System.out.println("Could Not Find Playlists");
+                return;
             }
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return returnMessage;
     }
 
     static String deleteConcert (int userInput)
