@@ -76,6 +76,7 @@ public class DriverCode {
                     System.out.print("Album name to search: ");
                     input = reader.readLine();
                     Query.album(input);
+                    break;
                 //Label
                 case 4:
                     System.out.print("Label name to search: ");
