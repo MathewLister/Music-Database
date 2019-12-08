@@ -447,28 +447,30 @@ public class Query {
     public static String insertConcert (String concertName, String concertDate, String concertLocation, String playListName)
     {
         String returnMessage = "Could not complete insertion";
-        String checkConcert = "SELECT * FROM concert WHERE concert_name = " + concertName + ";";
-        String checkPlaylist = "SELECT * FROM playlist WHERE playlist_id = " + concertName + ";";
-        String insertQuery = "INSERT INTO concert (concert_date, concert_name, concert_location) VALUES (" + concertDate + ", " + concertName + ", " + concertLocation + ");";
+        String checkConcert = "SELECT * FROM concert WHERE concert_name = '" +  concertName + "';";
+        String getPlaylistID = "SELECT playlist_id FROM playlist WHERE playlist_name = '" + playListName + "';";
+
 
         Connection con = DatabaseConnection.getConnection();
         try{
             // create 3 separate statements because only one ResultSet object per Statement object can be open at the same time
             Statement stmt1 = con.createStatement();
             Statement stmt2 = con.createStatement();
-            Statement stmt3 = con.createStatement();
             ResultSet rs1 = stmt1.executeQuery(checkConcert);
-            ResultSet rs2 = stmt3.executeQuery(checkPlaylist);
+
 
             if(rs1.next()) { // check if concert is in the playlist table
                 returnMessage = "Concert already exists";
             } else {
+                insertPlayList(playListName); // Make playlist for concert
+                ResultSet rs2 = stmt2.executeQuery(getPlaylistID);
+                rs2.next();
+                int ID = rs2.getInt(1);
+
+                String insertQuery = "INSERT INTO concert (concert_date, concert_name, concert_location, playlist_id) VALUES ('" + concertDate + "', '" + concertName + "', '" + concertLocation + "', " + ID + ");";
                 PreparedStatement ps = con.prepareStatement(insertQuery);
-                int ret = ps.executeUpdate(); // execute query and store return value in ret
-                //System.out.println("Return from Update: " + ret);
-                if(ret == 1) {
-                    insertPlayList(playListName);
-                }
+                ps.executeUpdate(); // execute query and store return value in ret
+                returnMessage = "Successful Insertion";
             }
             con.close(); // all lower objects are closed when connection is closed
         } catch (Exception e) {

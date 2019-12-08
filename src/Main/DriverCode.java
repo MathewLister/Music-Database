@@ -158,19 +158,15 @@ public class DriverCode {
                     String name;
                     String date;
                     String location;
-                    String playName;
 
                     System.out.print("Enter Concert Name: ");
                     name = reader.readLine();
-                    System.out.print("Enter Concert Date: ");
+                    System.out.print("Enter Concert Date And Time (YYYY-MM-DD HH:MM:SS): ");
                     date = reader.readLine();
                     System.out.print("Enter Concert Location: ");
                     location = reader.readLine();
 
-                    System.out.print("Enter a name for a playlist of songs for the concert: ");
-                    playName = reader.readLine();
-
-                    output = Query.insertConcert(name, date, location, playName);
+                    output = Query.insertConcert(name, date, location, name);
                     System.out.println(output);
                     break;
                 case 19:
