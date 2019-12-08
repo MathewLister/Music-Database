@@ -161,19 +161,11 @@ public class DriverCode {
                     break;
                 case 19:
                     //delete playlist
-                    playlistID = -1;
-                    try {
-                        System.out.print("Enter playlist ID (integer): ");
-                        input = reader.readLine();
-                        playlistID = Integer.parseInt(input);
-                        System.out.println(Query.deletePlaylist(playlistID));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Invalid Input");
-                    }
+                    Query.deletePlaylist();
                     break;
                 case 20:
                     //delete concert
+
                     break;
 
                 default:
