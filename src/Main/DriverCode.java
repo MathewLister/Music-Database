@@ -21,6 +21,7 @@ public class DriverCode {
         int option = 100;
         String input;
         String output;
+        int playlistID, songID;
         //This grabs options from console
         Scanner in = new Scanner(System.in);
         //This grabs strings from console for queries
@@ -138,20 +139,9 @@ public class DriverCode {
                     break;
                 case 17:
                     // insert song in playlist
-                    int songID = -1, playlistID = -1;
-                    try{
-                        System.out.print("Song ID (integer): ");
-                        input = reader.readLine();
-                        songID = Integer.parseInt(input);
-                        System.out.print("Playlist ID (integer): ");
-                        input = reader.readLine();
-                        playlistID = Integer.parseInt(input);
-                        output = Query.insertSongIntoPlaylist(songID, playlistID);
-                        System.out.println(output);
-                    } catch (Exception e) {
-                        //e.printStackTrace();1
-                        System.out.println("Invalid Input");
-                    }
+                    System.out.print("Enter Playlist Name: ");
+                    input = reader.readLine();
+                    Query.insertSongsIntoPlaylist(input);
                     break;
                 case 18: //NOT WORKING
                     //insert a concert
