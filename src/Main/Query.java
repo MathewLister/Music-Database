@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Query {
+class Query {
     //Shows all songs w/ the name searched
     static void song(String userInput) {
         Connection con = DatabaseConnection.getConnection();
@@ -573,7 +573,7 @@ public class Query {
 
     }
 
-    public static String insertConcert (String concertName, String concertDate, String concertLocation, String playListName)
+    static String insertConcert(String concertName, String concertDate, String concertLocation, String playListName)
     {
         String returnMessage = "Could not complete insertion";
         String checkConcert = "SELECT * FROM concert WHERE concert_name = '" +  concertName + "';";
@@ -608,7 +608,7 @@ public class Query {
         return returnMessage;
     }
 
-    public static String insertPlayList (String name)
+    static String insertPlayList(String name)
     {
         String returnMessage = "Could not complete insertion";
         String checkPlaylist = "SELECT * FROM playlist WHERE playlist_name = '" + name + "';";
