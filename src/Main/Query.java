@@ -173,6 +173,27 @@ public class Query {
         }
     }
 
+    static void concert(String userInput)
+    {
+        Connection con = DatabaseConnection.getConnection();
+        String myFormat = "| %-30s | %-30s | %-30s |%n";
+        String query = "SELECT concert_name, concert_location, concert_date FROM concert WHERE concert_name LIKE '%" + userInput + "%';";
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if(rs.next()) {
+                System.out.format(myFormat, "Concert", "Date", "Location");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
+                } while (rs.next());
+                System.out.println("----------------------------------------------------------------------------------------------------");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     static void genre(String userInput)
     {
         Connection con = DatabaseConnection.getConnection();
@@ -181,14 +202,13 @@ public class Query {
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            if(rs != null) {
-                if(rs.isBeforeFirst()) {
-                    System.out.format(myFormat, "Artist", "Album", "Genre", "Album Date", "Album ID");
-                    System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
-                    while(rs.next()) {
-                        System.out.format(myFormat,rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
-                    }
+            if(rs.next()) {
+                System.out.format(myFormat, "Artist", "Album", "Genre", "Album Date", "Album ID");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
+                do {
+                    System.out.format(myFormat,rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 }
+                while(rs.next()) ;
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             }
             else {

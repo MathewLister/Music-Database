@@ -91,6 +91,9 @@ public class DriverCode {
                     break;
                 //Concert
                 case 6:
+                    System.out.print("Concert name to search: ");
+                    input = reader.readLine();
+                    Query.concert(input);
                     break;
                 //Genre
                 case 7:
