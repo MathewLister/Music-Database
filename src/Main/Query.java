@@ -6,11 +6,9 @@ import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TimeZone;
+import java.util.*;
 
 public class Query {
     //Shows all songs w/ the name searched
@@ -133,40 +131,88 @@ public class Query {
         int duration;
         String tmp;
         Connection con = DatabaseConnection.getConnection();
-        String getPlayList = "SELECT p.playlist_name, SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_name LIKE '%" + userInput + "%' GROUP BY p.playlist_id;";
-        String showSongs = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab, playlist_song playSong, playlist play WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND playSong.playlist_id = play.playlist_id AND playSong.song_id = s.song_id AND play.playlist_name LIKE '%" + userInput + "%';";
+        String getPlaylistIDs = "SELECT playlist_id FROM playlist WHERE playlist_name LIKE ? ;";
+        String getPlaylistLength = "SELECT SUM(s.song_duration) AS LENGTH FROM playlist_song ps JOIN song s ON ps.song_id = s.song_id JOIN playlist p ON ps.playlist_id = p.playlist_id WHERE p.playlist_id = ? ;";
+        String getPlaylistName = "SELECT p.playlist_name FROM playlist p WHERE p.playlist_id = ? ;";
+        String showSongs = "SELECT artist_name, song_name, album_name, song_duration FROM artist a, song s, artist_song sa, album ab, playlist_song playSong, playlist play WHERE sa.artist_id = a.artist_id AND sa.song_id = s.song_id AND ab.artist_id = a.artist_id AND playSong.playlist_id = play.playlist_id AND playSong.song_id = s.song_id AND play.playlist_id = ? ;";
         String myFormat1 = "| %-30s | %-10s |%n";
         String myFormat2 = "| %-30s | %-50s | %-50s | %-10s |%n";
-        try {
-            Statement stmt1 = con.createStatement();
-            Statement stmt2 = con.createStatement();
+        PreparedStatement ps1, ps2, ps3;
+        ResultSet rs1, rs2, rs3;
+        ArrayList<Integer> playlistIDs = new ArrayList<>();
 
-            ResultSet rs1 = stmt1.executeQuery(getPlayList);
-            ResultSet rs2 = stmt2.executeQuery(showSongs);
+        try {
+            ps1 = con.prepareStatement(getPlaylistIDs);
+            ps1.setString(1, "%" + userInput + "%");
+            rs1 = ps1.executeQuery();
             if(rs1.next()) {
                 do {
-                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
-                    System.out.format(myFormat1, "Playlist Name", "Duration: HH:mm:ss");
-                    tmp = rs1.getString(2);
-                    duration = Integer.parseInt(tmp);
-                    Date date = new Date(duration * 1000L);
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-                    df.setTimeZone(TimeZone.getTimeZone("GMT"));
-                    tmp = df.format(date);
-                    System.out.format(myFormat1, rs1.getString(1), tmp);
-                    if(rs2.next()) {
-                        System.out.format(myFormat2, "Artist", "Song", "Album", "Song Duration");
+                    playlistIDs.add(rs1.getInt(1));
+                } while (rs1.next());
+                rs1.close();
+                ps1.close();
+            } else {
+                System.out.println("No Playlists found");
+                return;
+            }
+
+            for(Integer ID : playlistIDs) {
+                try {
+                    ps1 = con.prepareStatement(getPlaylistName);
+                    ps1.setInt(1, ID);
+                    ps2 = con.prepareStatement(getPlaylistLength);
+                    ps2.setInt(1, ID);
+                    ps3 = con.prepareStatement(showSongs);
+                    ps3.setInt(1, ID);
+                    rs1 = ps1.executeQuery();
+                    rs2 = ps2.executeQuery();
+                    rs3 = ps3.executeQuery();
+                    if(rs1.next()) {
+                        rs2.next();
+                        System.out.format(myFormat1, "Playlist Name", "Duration: HH:mm:ss");
                         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
-                        do {
-                            System.out.format(myFormat2, rs2.getString(1), rs2.getString(2), rs2.getString(3), rs2.getString(4));
-                        } while(rs2.next());
+                        tmp = rs2.getString(1);
+                        if(tmp != null) {
+                            duration = Integer.parseInt(tmp);
+                            Date date = new Date(duration * 1000L);
+                            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                            tmp = df.format(date);
+                        } else {
+                            tmp = "00:00:00";
+                        }
+                        System.out.format(myFormat1, rs1.getString(1), tmp);
                         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
                     }
-                } while(rs1.next());
+                    System.out.format(myFormat2, "Artist", "Song", "Album", "Song Duration");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    if(rs3.next()) {
+                        do {
+                            tmp = rs3.getString(4);
+                            duration = Integer.parseInt(tmp);
+                            Date date = new Date(duration * 1000L);
+                            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                            tmp = df.format(date);
+                            System.out.format(myFormat2, rs3.getString(1), rs3.getString(2), rs3.getString(3), tmp);
+                        } while (rs3.next());
+
+                    } else {
+                        System.out.println("| Empty");
+                    }
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    ps1.close();
+                    ps2.close();
+                    ps3.close();
+                    rs1.close();
+                    rs2.close();
+                    rs3.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            else {
-                System.out.println("Empty Set");
-            }
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
