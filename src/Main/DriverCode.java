@@ -169,7 +169,7 @@ public class DriverCode {
                     break;
                 case 20:
                     //delete concert
-
+                    Query.deleteConcert();
                     break;
 
                 default:
