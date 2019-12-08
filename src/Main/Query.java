@@ -120,7 +120,7 @@ public class Query {
                 } while (rs.next());
                 System.out.println("-------------------------------------------------------------------------");
             } else {
-                System.out.println("Label " + userInput + "Could Not Be Found");
+                System.out.println("Label " + userInput + " Could Not Be Found");
             }
             con.close();
         } catch (SQLException ex) {
