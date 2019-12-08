@@ -709,29 +709,55 @@ class Query {
         }
     }
 
-    static String deleteConcert (int userInput)
+    static void deleteConcert()
     {
-        String returnMessage = "Could not delete concert";
-        String concertExists = "SELECT concert_name FROM concert WHERE concert_id = " + userInput + ";";
-        String removeConcert = "DELETE FROM concert WHERE concert_id = " + userInput + ";";
-        String concertName;
+        Map<String, Integer> cache = new HashMap<>();
+        String getConcerts = "SELECT concert_name, concert_id FROM concert WHERE concert_name LIKE ? ;";
+        String delConcert = "DELETE FROM concert WHERE concert_id = ? ;";
+        String concertFormat = "| %-30s |%n";
+        String input;
+        Integer ID;
+        PreparedStatement ps;
+        ResultSet rs;
 
-        Connection con = DatabaseConnection.getConnection();
+        //This grabs options from console
+        Scanner in = new Scanner(System.in);
+        //This grabs strings from console for queries
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(concertExists);
+            Connection con = DatabaseConnection.getConnection();
+            System.out.print("Enter Concert Name: ");
+            input = reader.readLine();
+            ps = con.prepareStatement(getConcerts);
+            ps.setString(1, "%" + input + "%");
+            rs = ps.executeQuery();
             if(rs.next()) {
-                concertName = rs.getString(1);
-                PreparedStatement ps = con.prepareStatement(removeConcert);
+                do {
+                    cache.put(rs.getString(1), rs.getInt(2));
+                } while (rs.next());
+            }
+            rs.close();
+            ps.close();
+
+            System.out.format(concertFormat, "Concert Name");
+            cache.forEach((cName, cID) -> {
+                System.out.format(concertFormat, cName);
+            });
+            System.out.println("------------------------------------------------------------\n");
+            System.out.print("Enter Concert Name to delete: ");
+            input = reader.readLine();
+            ID = cache.get(input);
+            if(ID != null) {
+                ps = con.prepareStatement(delConcert);
+                ps.setInt(1, ID);
                 ps.executeUpdate();
-                returnMessage = "Successfully deleted: " + concertName;
+                System.out.println("Delete Successful");
             } else {
-                returnMessage = "Concert Does not Exist";
+                System.out.println("Invalid Concert");
             }
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return returnMessage;
     }
 }
