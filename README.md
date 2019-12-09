@@ -18,22 +18,18 @@ Functions can be selected by typing in their corresponding number.
 FOLDERS, FILES, AND THEIR FUNCTIONS
 -----------------------------------
 1. Deliverables     //Folder holding the non-active code and pdf files
-	-Data Dictionary.pdf      //Describes tables, their associated variables, variable data types, and descriptions
-	-ER Diagram.png      //Visual representation of data tables, and the means by which they are connected
-	-Music Database.jar     //Executable file that contains all files on GitHub
-	-MusicDatabaseDataDump20191207.sql      //Populates the database
-	-MusicDatabaseStructureDump20191207.sql     //Creates the database
-
+	- Data Dictionary.pdf      //Describes tables, their associated variables, variable data types, and descriptions
+	- ER Diagram.png      //Visual representation of data tables, and the means by which they are connected
+	- Music Database.jar     //Executable file that contains all files on GitHub
+	- MusicDatabaseDataDump20191207.sql      //Populates the database
+	- MusicDatabaseStructureDump20191207.sql     //Creates the database
 2. Src      //Folder holding main code functions and definitions
-A. Main     //Consists of database connection, executable code and function definitions
-a. DatabaseConnection.java      //Establishes connection to the database, contains login data
-b. DriverCode.java      //Contains user interface for the database
-c. Query.java     //Function definitions of functions called in DriverCode.java
-
+	- Main     //Consists of database connection, executable code and function definitions
+		- DatabaseConnection.java      //Establishes connection to the database, contains login data
+		- DriverCode.java      //Contains user interface for the database
+		- Query.java     //Function definitions of functions called in DriverCode.java
 3. .gitIgnore     //Tells git which files to ignore when pushing and pulling
-
 4. Music Database.iml     //Intellij created file that stores Java development module
-
 5. README.md      //This file, describes files, functions of user interface, and ...
 
 
@@ -41,30 +37,30 @@ c. Query.java     //Function definitions of functions called in DriverCode.java
 BASIC FUNCTIONS OF USER INTERFACE
 ---------------------------------
 1. Search
-  A. Search songs
-  B. Search artists
-  C. Search albums
-  D. Search labels
-  E. Search playlists
-  F. Search concerts
-  G. Search genres
+  - Search songs
+  - Search artists
+  - Search albums
+  - Search labels
+  - Search playlists
+  - Search concerts
+  - Search genres
   
 2. Get All (Prints all relevant data of selected category)
-  A. Get songs
-  B. Get artists
-  C. Get albums
-  D. Get labels
-  E. Get playlists
-  F. Get concerts
-  G. Get genres
-  H. Get members of an artist
+  - Get songs
+  - Get artists
+  - Get albums
+  - Get labels
+  - Get playlists
+  - Get concerts
+  - Get genres
+  - Get members of an artist
   
 3. Insert
-  A. Create a playlist name if it does not exist, but does not insert songs
-  B. Insert songs into an existing playlist
-  C. Create a concert, and then add the name, then the date and time, then the location
+  - Create a playlist name if it does not exist, but does not insert songs
+  - Insert songs into an existing playlist
+  - Create a concert, and then add the name, then the date and time, then the location
 
 4. Delete
-  A. Get rid of playlist table
-  B. Get rid of concert table
+  - Get rid of playlist table
+  - Get rid of concert table
   
