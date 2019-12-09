@@ -538,7 +538,7 @@ class Query {
                         ps.setInt(1, keyID);
                         ps.setInt(2, playlistID);
                         ps.executeUpdate();
-
+                        System.out.println("Insertion Successful");
                     }
 
                     System.out.println("\n1. Enter New Song\n2. Exit");
