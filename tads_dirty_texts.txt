@@ -4,4 +4,7 @@ Errors to fix
 - If I want to enter another song after this, I am asked twice if I want to input a song.
 - If I input a second song, I get a "Connection closed" error.
 
-2. 
+2. Menu Option 18
+- If I input the wrong date format, I will get an SQL error. No concert will be created, but an empty playlist will be created.
+
+3.
