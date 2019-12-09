@@ -760,9 +760,13 @@ class Query {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
     static void updateConcert(String userInput)
     {
         //Working...
     }
 }
+=======
+}
+>>>>>>> 4ebd2fae84bfa0451aaf9da65a372762ab83a578
