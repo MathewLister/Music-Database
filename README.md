@@ -1,7 +1,7 @@
 -------------
 BRIEF SUMMARY
 -------------
-This program allows the user to select, insert, update, and delete tables and their values in a music database. The music database holds songs, artists, albums, labels, playlists, concerts, and genres. The database is connected to using DatabaseConnection.java, the music database is interacted with using the user interface defined in DriverCode.java, and the functions of the user interface are defined in Query.java. Other files include an ER diagram and a Data Dictionary.
+This program allows the user to select, insert, update, and delete values in a music database. The music database holds songs, artists, albums, labels, playlists, concerts, and genres. The database is connected to using DatabaseConnection.java, the music database is interacted with using the user interface defined in DriverCode.java, and the functions of the user interface are defined in Query.java. Other files include an ER diagram and a Data Dictionary.
 
 
 ---------------------------
@@ -36,7 +36,7 @@ FOLDERS, FILES, AND THEIR FUNCTIONS
 ---------------------------------
 BASIC FUNCTIONS OF USER INTERFACE
 ---------------------------------
-1. Search
+1. Search (Search by keyword / Case Insensitive search)
   - Search songs
   - Search artists
   - Search albums
@@ -55,12 +55,12 @@ BASIC FUNCTIONS OF USER INTERFACE
   - Get genres
   - Get members of an artist
   
-3. Insert
+3. Insert (Search by keyword, then validation is CASE SENSITIVE)
   - Create a playlist name if it does not exist, but does not insert songs
   - Insert songs into an existing playlist
   - Create a concert, and then add the name, then the date and time, then the location
 
-4. Delete
+4. Delete (Search by keyword, then validation is CASE SENSITIVE)
   - Get rid of playlist table
   - Get rid of concert table
   
