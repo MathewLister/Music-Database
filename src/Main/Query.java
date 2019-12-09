@@ -760,4 +760,9 @@ class Query {
             e.printStackTrace();
         }
     }
+
+    static void updateConcert(String userInput)
+    {
+        //Working...
+    }
 }
