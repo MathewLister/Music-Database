@@ -1,11 +1,17 @@
-RUN: DriverCode
 -------------
 BRIEF SUMMARY
 -------------
 This program allows the user to select, insert, update, and delete tables and their values in a music database. The music database holds songs, artists, albums, labels, playlists, concerts, and genres. The database is connected to using DatabaseConnection.java, the music database is interacted with using the user interface defined in DriverCode.java, and the functions of the user interface are defined in Query.java. Other files include an ER diagram and a Data Dictionary.
 
 
-
+---------------------------
+INSTRUCTIONS TO RUN PROGRAM
+---------------------------
+In GitHub, go to deliverables folder, download jar file.
+Open command line and change directory to where the jar file has been downloaded.
+Run command "java -jar Music\ Database.jar", which will open the user interface.
+From there, available functions will be listed, and are ready for use.
+Functions can be selected by typing in their corresponding number.
 
 
 -----------------------------------
@@ -57,8 +63,3 @@ BASIC FUNCTIONS OF USER INTERFACE
   A. Get rid of playlist table
   B. Get rid of concert table
   
-  
-
---------------
-
---------------
