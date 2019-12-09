@@ -839,7 +839,7 @@ class Query {
         Map<String, Integer> cache = new HashMap<>();
 
         String getConcerts = "SELECT concert_name, concert_id FROM concert WHERE concert_name LIKE ? ;";
-        String concert = "SELECT concert_name, concert_date, concert_location FROM concert WHERE concert_name LIKE ? ;";
+        String concert = "SELECT concert_name, concert_date, concert_location, concert_id FROM concert WHERE concert_name LIKE ? ;";
 
         Integer concertID = null;
         String myFormat = "| %-30s | %-30s | %-30s |%n";
@@ -855,30 +855,27 @@ class Query {
 
         try {
             Connection con = DatabaseConnection.getConnection();
-            System.out.print("Enter concert name to update: ");
-            input = reader.readLine();
-            ps = con.prepareStatement(getConcerts);
-            ps.setString(1, "%" + input + "%");
+            ps = con.prepareStatement(concert);
+            ps.setString(1, "%" + userInput + "%");
             rs1 = ps.executeQuery();
-            Statement stmt = con.createStatement();
-            rs2 = stmt.executeQuery(concert);
             if (rs1.next()) {
                 System.out.format(myFormat, "Concert", "Date", "Location");
                 System.out.println("----------------------------------------------------------------------------------------------------");
                 do {
-                    cache.put(rs1.getString(1), rs1.getInt(2));
-                    System.out.format(myFormat, rs2.getString(1), rs2.getString(2), rs2.getString(3));
+                    cache.put(rs1.getString(1), rs1.getInt(4));
+                    System.out.format(myFormat, rs1.getString(1), rs1.getString(2), rs1.getString(3));
                 } while (rs1.next());
                 ps.close();
                 rs1.close();
-                rs2.close();
                 System.out.println("----------------------------------------------------------------------------------------------------");
-                System.out.print("Enter a concert name: ");
+                System.out.print("(*Case Sensitive) Enter a concert name: ");
+
                 input = reader.readLine();
                 concertID = cache.get(input);
                 if (concertID != null) {
                     while (option != 0) {
                       System.out.println(menu);
+                      System.out.print("Enter a menu value: ");
                       option = in.nextInt();
                       switch (option) {
                           //exit
@@ -889,32 +886,37 @@ class Query {
                           case 1:
                               System.out.print("Enter the new name: ");
                               input = reader.readLine();
-                              String updateName = "UPDATE concert SET concert_name = '" + input + "' WHERE concert_id = '" + concertID + "';";
+                              String updateName = "UPDATE concert SET concert_name = '" + input + "' WHERE concert_id = " + concertID + ";";
                               ps = con.prepareStatement(updateName);
                               ps.executeUpdate();
                               ps.close();
+                              System.out.println("Successful update");
                               break;
                           //update date
                           case 2:
-                              System.out.print("Enter the new date: ");
+                              System.out.print("Enter the new date and time as, YYYY-MM-DD HH:mm:ss : ");
                               input = reader.readLine();
-                              String updateDate = "UPDATE concert SET concert_date = '" + input + "' WHERE concert_id = '" + concertID + "';";
+                              String updateDate = "UPDATE concert SET concert_date = '" + input + "' WHERE concert_id = " + concertID + ";";
                               ps = con.prepareStatement(updateDate);
                               ps.executeUpdate();
                               ps.close();
+                              System.out.println("Successful update");
                               break;
                           //update location
                           case 3:
                               System.out.print("Enter the new location: ");
                               input = reader.readLine();
-                              String updateLocation = "UPDATE concert SET concert_location = '" + input + "' WHERE concert_id = '" + concertID + "';";
+                              String updateLocation = "UPDATE concert SET concert_location = '" + input + "' WHERE concert_id = " + concertID + ";";
                               ps = con.prepareStatement(updateLocation);
                               ps.executeUpdate();
                               ps.close();
+                              System.out.println("Successful update");
                               break;
                       }
                     }
                 }
+            } else {
+                System.out.println("No results found");
             }
         } catch (IOException | SQLException e) {
             e.printStackTrace();

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DriverCode {
     //Validates that option input is within our case range 0-...
     public static boolean ValidOption(int choice) {
-        return (choice >= 0) && (choice <= 19);
+        return (choice >= 0) && (choice <= 22);
     }
 
     //Driver Code
@@ -177,7 +177,9 @@ public class DriverCode {
                     Query.removeSongFromPlaylist();
                     break;
                 case 22:
-                    //Query.updateConcert();
+                    System.out.print("Enter Concert Name: ");
+                    input = reader.readLine();
+                    Query.updateConcert(input);
                     break;
 
                 default:
