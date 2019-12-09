@@ -631,6 +631,104 @@ class Query {
         return returnMessage;
     }
 
+    static void removeSongFromPlaylist()
+    {
+        String getPlaylists = "SELECT playlist_name, playlist_id FROM playlist WHERE playlist_name LIKE ? ;";
+        String getSongs = "SELECT a.artist_name, s.song_name, s.song_id FROM artist a JOIN artist_song sa ON a.artist_id = sa.artist_id JOIN song s ON sa.song_id = s.song_id JOIN playlist_song ps ON ps.song_id = s.song_id WHERE ps.playlist_id = ? ;";
+        String removeSong = "DELETE FROM playlist_song WHERE song_id = ? AND playlist_id = ? ;";
+        String playlistFormat = "| %-50s |%n";
+        String songFormat = "| %-30s | %-50s |%n";
+        String input, artistName, songName;
+        int option = 1;
+        Integer playlistID, songID;
+        PreparedStatement ps;
+        ResultSet rs;
+        Map<String, Integer> playlists = new HashMap<>();
+        Map<Pair<String, String>, Integer> songs = new HashMap<>();
+
+        Connection con = DatabaseConnection.getConnection();
+
+        //This grabs options from console
+        Scanner in = new Scanner(System.in);
+        //This grabs strings from console for queries
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Enter Playlist Name: ");
+        try {
+            input = reader.readLine();
+            ps = con.prepareStatement(getPlaylists);
+            ps.setString(1, input);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                System.out.format(playlistFormat, "Playlist Name");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                do {
+                    playlists.put(rs.getString(1), rs.getInt(2));
+                    System.out.format(playlistFormat, rs.getString(1)); // output and store playlist names and ID's
+                } while(rs.next());
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                rs.close();
+                ps.close();
+            } else {
+                System.out.println("No Playlists Found");
+                con.close();
+                return;
+            }
+            System.out.print("Enter Playlist Name to remove songs from (case sensitive): ");
+            input = reader.readLine();
+            playlistID = playlists.get(input);
+            if(playlistID == null) { // check if input is in map
+                System.out.println("Invalid Playlist Name. Exiting");
+                con.close();
+                return;
+            }
+            while(option == 1) {
+                System.out.println("1. Remove song From Playlist\n2. Exit\n");
+                input = reader.readLine();
+                option = Integer.parseInt(input);
+                if(option != 1) {
+                    continue;
+                }
+                ps = con.prepareStatement(getSongs);
+                ps.setInt(1, playlistID);
+                rs = ps.executeQuery();
+                if(rs.next()) {
+                    System.out.format(songFormat, "Artist Name", "Song Name");
+                    System.out.println("----------------------------------------------------------------------------------------------------");
+                    do {
+                        songs.put(new Pair<>(rs.getString(1), rs.getString(2)), rs.getInt(3));
+                        System.out.format(songFormat, rs.getString(1), rs.getString(2));
+                    } while (rs.next());
+                    rs.close();
+                    ps.close();
+                    System.out.println("----------------------------------------------------------------------------------------------------");
+                    System.out.print("Enter Artist Name (Case Sensitive): ");
+                    artistName = reader.readLine();
+                    System.out.print("Enter Song Name (Case Sensitive): ");
+                    songName = reader.readLine();
+                    songID = songs.get(new Pair<>(artistName, songName));
+                    if(songID == null) {
+                        System.out.println("Could not find song");
+                        continue;
+                    }
+                    ps = con.prepareStatement(removeSong);
+                    ps.setInt(1, songID);
+                    ps.setInt(2, playlistID);
+                    ps.executeUpdate();
+                    System.out.println("Removed Song");
+                } else {
+                    System.out.println("Empty Playlist");
+                    con.close();
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Invalid Input");
+        }
+
+    }
+
     // don't test until insert playlist works!!
     static void deletePlaylist() {
         Map<String, Integer> cache = new HashMap<>();
