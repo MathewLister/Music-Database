@@ -17,7 +17,8 @@ public class DriverCode {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Playlist\n6. Concert\n7. Genre";
         String searchAll = "********GET ALL********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist";
         String insert = "********INSERT********\n16. Insert Playlist\n17. Insert Song in Playlist\n18. Insert a Concert";
-        String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert";
+        String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert\n21. Remove Song From Playlist";
+        String update = "********UPDATE********\n22. Update Concert";
         int option = 100;
         String input;
         String output;
@@ -33,6 +34,7 @@ public class DriverCode {
             System.out.println(searchAll + "\n");
             System.out.println(insert + "\n");
             System.out.println(delete + "\n");
+            System.out.println(update + "\n");
             System.out.print("Enter Menu Option: ");
             //option = in.nextInt();
             String tmp = in.nextLine(); // get input from user
@@ -170,6 +172,12 @@ public class DriverCode {
                 case 20:
                     //delete concert
                     Query.deleteConcert();
+                    break;
+                case 21:
+                    Query.removeSongFromPlaylist();
+                    break;
+                case 22:
+                    //Query.updateConcert();
                     break;
 
                 default:
