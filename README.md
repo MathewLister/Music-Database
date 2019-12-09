@@ -23,7 +23,7 @@ FOLDERS, FILES, AND THEIR FUNCTIONS
 	- Music Database.jar     //Executable file that contains all files on GitHub
 	- MusicDatabaseDataDump20191207.sql      //Populates the database
 	- MusicDatabaseStructureDump20191207.sql     //Creates the database
-2. Src      //Folder holding main code functions and definitions
+2. Src      //Folder holding source code functions and definitions 
 	- Main     //Consists of database connection, executable code and function definitions
 		- DatabaseConnection.java      //Establishes connection to the database, contains login data
 		- DriverCode.java      //Contains user interface for the database
