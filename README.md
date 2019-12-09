@@ -20,8 +20,9 @@ FOLDERS, FILES, AND THEIR FUNCTIONS
 1. Deliverables     //Folder holding the non-active code and pdf files
   A. Data Dictionary.pdf      //Describes tables, their associated variables, variable data types, and descriptions
   B. ER Diagram.png      //Visual representation of data tables, and the means by which they are connected
-  C. MusicDatabaseDataDump20191207.sql      //Populates the database
-  D. MusicDatabaseStructureDump20191207.sql     //Creates the database
+  C. Music Database.jar     //Executable file that contains all files on GitHub
+  D. MusicDatabaseDataDump20191207.sql      //Populates the database
+  E. MusicDatabaseStructureDump20191207.sql     //Creates the database
 2. Src      //Folder holding main code functions and definitions
   A. Main     //Consists of database connection, executable code and function definitions
     a. DatabaseConnection.java      //Establishes connection to the database, contains login data
