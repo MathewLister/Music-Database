@@ -18,18 +18,22 @@ Functions can be selected by typing in their corresponding number.
 FOLDERS, FILES, AND THEIR FUNCTIONS
 -----------------------------------
 1. Deliverables     //Folder holding the non-active code and pdf files
-  A. Data Dictionary.pdf      //Describes tables, their associated variables, variable data types, and descriptions
-  B. ER Diagram.png      //Visual representation of data tables, and the means by which they are connected
-  C. Music Database.jar     //Executable file that contains all files on GitHub
-  D. MusicDatabaseDataDump20191207.sql      //Populates the database
-  E. MusicDatabaseStructureDump20191207.sql     //Creates the database
+	-Data Dictionary.pdf      //Describes tables, their associated variables, variable data types, and descriptions
+	-ER Diagram.png      //Visual representation of data tables, and the means by which they are connected
+	-Music Database.jar     //Executable file that contains all files on GitHub
+	-MusicDatabaseDataDump20191207.sql      //Populates the database
+	-MusicDatabaseStructureDump20191207.sql     //Creates the database
+
 2. Src      //Folder holding main code functions and definitions
-  A. Main     //Consists of database connection, executable code and function definitions
-    a. DatabaseConnection.java      //Establishes connection to the database, contains login data
-    b. DriverCode.java      //Contains user interface for the database
-    c. Query.java     //Function definitions of functions called in DriverCode.java
+A. Main     //Consists of database connection, executable code and function definitions
+a. DatabaseConnection.java      //Establishes connection to the database, contains login data
+b. DriverCode.java      //Contains user interface for the database
+c. Query.java     //Function definitions of functions called in DriverCode.java
+
 3. .gitIgnore     //Tells git which files to ignore when pushing and pulling
+
 4. Music Database.iml     //Intellij created file that stores Java development module
+
 5. README.md      //This file, describes files, functions of user interface, and ...
 
 
