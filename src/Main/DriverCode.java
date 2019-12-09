@@ -147,7 +147,7 @@ public class DriverCode {
                     input = reader.readLine();
                     Query.insertSongsIntoPlaylist(input);
                     break;
-                case 18: //NOT WORKING
+                case 18:
                     //insert a concert
                     String name;
                     String date;
