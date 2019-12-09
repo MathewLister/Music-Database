@@ -15,7 +15,7 @@ public class DriverCode {
     //Driver Code
     public static void main(String args[]) throws SQLException, IOException {
         String menu = "*************MENU*************\n0. Exit\n********SEARCH BY********\n1. Song\n2. Artist\n3. Album\n4. Label\n5. Playlist\n6. Concert\n7. Genre";
-        String searchAll = "********Get All********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist\n";
+        String searchAll = "********GET ALL********\n8. Songs\n9. Artists\n10. Albums\n11. Labels\n12. Playlists\n13. Concerts\n14. Genres\n15. Members of an Artist";
         String insert = "********INSERT********\n16. Insert Playlist\n17. Insert Song in Playlist\n18. Insert a Concert";
         String delete = "********DELETE********\n19. Delete a Playlist\n20. Delete a Concert";
         int option = 100;
