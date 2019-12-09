@@ -1,0 +1,7 @@
+Errors to fix
+1. Menu Option 17
+- I am asked for the song, then I am asked for song and then artist, even though I already input song.
+- If I want to enter another song after this, I am asked twice if I want to input a song.
+- If I input a second song, I get a "Connection closed" error.
+
+2. 
