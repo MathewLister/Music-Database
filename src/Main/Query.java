@@ -659,7 +659,7 @@ class Query {
         //This grabs strings from console for queries
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.print("Enter Playlist Name: ");
+        System.out.print("Enter Playlist Name (Keyword Search): ");
         try {
             input = reader.readLine();
             ps = con.prepareStatement(getPlaylists);
@@ -851,6 +851,7 @@ class Query {
 
     static void updateConcert(String userInput) {
         Map<String, Integer> cache = new HashMap<>();
+
 
         String concert = "SELECT concert_name, concert_date, concert_location, concert_id FROM concert WHERE concert_name LIKE ? ;";
 
