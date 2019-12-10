@@ -65,6 +65,6 @@ BASIC FUNCTIONS OF USER INTERFACE
   - Get rid of playlist table
   - Get rid of concert table
 5. Update
-	-Update the name of concert
-	-Update the date of concert
-	-Update the location of concert
+	- Update the name of concert
+	- Update the date of concert
+	- Update the location of concert
