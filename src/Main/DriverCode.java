@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class DriverCode {
     //Validates that option input is within our case range 0-...
-    public static boolean ValidOption(int choice) {
+    private static boolean ValidOption(int choice) {
         return (choice >= 0) && (choice <= 22);
     }
 
@@ -22,7 +22,7 @@ public class DriverCode {
         int option = 100;
         String input;
         String output;
-        int playlistID, songID;
+
         //This grabs options from console
         Scanner in = new Scanner(System.in);
         //This grabs strings from console for queries

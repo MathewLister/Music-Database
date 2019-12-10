@@ -844,7 +844,6 @@ class Query {
     static void updateConcert(String userInput) {
         Map<String, Integer> cache = new HashMap<>();
 
-        String getConcerts = "SELECT concert_name, concert_id FROM concert WHERE concert_name LIKE ? ;";
         String concert = "SELECT concert_name, concert_date, concert_location, concert_id FROM concert WHERE concert_name LIKE ? ;";
 
         Integer concertID = null;
