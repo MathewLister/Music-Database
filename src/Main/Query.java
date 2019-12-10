@@ -226,7 +226,7 @@ class Query {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
-                System.out.format(myFormat, "Concert", "Date", "Location");
+                System.out.format(myFormat, "Concert", "Location", "Date");
                 System.out.println("----------------------------------------------------------------------------------------------------");
                 do {
                     System.out.format(myFormat, rs.getString(1), rs.getString(2), rs.getString(3));
