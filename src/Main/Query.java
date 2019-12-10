@@ -545,6 +545,9 @@ class Query {
                             ps.executeUpdate();
                             System.out.println("Insertion Successful");
                         }
+                        else {
+                            System.out.println("Unsuccessful Insertion");
+                        }
                     }
                     cache.clear();
                 } catch (Exception e) {
