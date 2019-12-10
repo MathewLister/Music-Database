@@ -544,6 +544,8 @@ class Query {
                             ps.setInt(2, playlistID);
                             ps.executeUpdate();
                             System.out.println("Insertion Successful");
+                        } else {
+                            System.out.println("Invalid Song");
                         }
                         else {
                             System.out.println("Unsuccessful Insertion");
