@@ -41,7 +41,7 @@ class Query {
             }
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -73,7 +73,7 @@ class Query {
             }
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -97,7 +97,7 @@ class Query {
             }
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -121,7 +121,7 @@ class Query {
             }
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -207,14 +207,14 @@ class Query {
                     rs2.close();
                     rs3.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
             System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -234,7 +234,7 @@ class Query {
                 System.out.println("----------------------------------------------------------------------------------------------------");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -258,7 +258,7 @@ class Query {
             }
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -281,7 +281,7 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -304,7 +304,7 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
@@ -326,7 +326,7 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -349,7 +349,7 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -395,7 +395,7 @@ class Query {
             System.out.println("----------------------------------------------------------------------------------------------------");
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -418,7 +418,7 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -440,7 +440,8 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 
@@ -463,7 +464,8 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 
@@ -492,7 +494,8 @@ class Query {
                 return;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
             return;
         }
 
@@ -509,7 +512,7 @@ class Query {
                     input = reader.readLine();
                     choice = Integer.parseInt(input);
                     if (choice == 1) {
-                        System.out.print("Enter Song Name: ");
+                        System.out.print("Enter Song Name (Keyword Search): ");
                         searchSong = reader.readLine(); // read in song name
                         ps = con.prepareStatement(getSongs1 + searchSong + getSongs2); // get songs related to search
                         rs = ps.executeQuery();
@@ -529,9 +532,9 @@ class Query {
                             System.out.println("No Results");
                             continue;
                         }
-                        System.out.print("Enter Artist Name: ");
+                        System.out.print("Enter Artist Name (Case Sensitive): ");
                         artist = reader.readLine();
-                        System.out.print("Enter Song Name: ");
+                        System.out.print("Enter Song Name (Case Sensitive): ");
                         song = reader.readLine();
                         keyID = cache.get(new Pair<>(artist, song));
                         if (keyID != null) {
@@ -551,7 +554,8 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 
@@ -584,7 +588,8 @@ class Query {
             }
             con.close(); // all lower objects are closed when connection is closed
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
         return returnMessage;
     }
@@ -626,7 +631,8 @@ class Query {
             }
             con.close(); // all lower objects are closed when connection is closed
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
         return returnMessage;
     }
@@ -723,7 +729,7 @@ class Query {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Invalid Input");
         }
 
@@ -786,7 +792,8 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 
@@ -837,7 +844,8 @@ class Query {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 
@@ -924,7 +932,8 @@ class Query {
                 System.out.println("No results found");
             }
         } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Invalid Input");
         }
     }
 }
