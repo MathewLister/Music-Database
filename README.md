@@ -10,6 +10,7 @@ INSTRUCTIONS TO RUN PROGRAM
 In GitHub, go to deliverables folder, download jar file.
 Open command line and change directory to where the jar file has been downloaded.
 Run command "java -jar Music\ Database.jar", which will open the user interface.
+Must have Java version 11+ ( openjdk-11-jre-headless )
 From there, available functions will be listed, and are ready for use.
 Functions can be selected by typing in their corresponding number.
 
