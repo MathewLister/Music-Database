@@ -63,43 +63,43 @@ public class DriverCode {
                 //Search by:
                 //Song
                 case 1:
-                    System.out.print("Song name to search: ");
+                    System.out.print("Song name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.song(input);
                     break;
                 //Artist
                 case 2:
-                    System.out.print("Artist name to search: ");
+                    System.out.print("Artist name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.artist(input);
                     break;
                 //Album
                 case 3:
-                    System.out.print("Album name to search: ");
+                    System.out.print("Album name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.album(input);
                     break;
                 //Label
                 case 4:
-                    System.out.print("Label name to search: ");
+                    System.out.print("Label name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.label(input);
                     break;
                 //Play List
                 case 5:
-                    System.out.print("Playlist name to search: ");
+                    System.out.print("Playlist name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.playList(input);
                     break;
                 //Concert
                 case 6:
-                    System.out.print("Concert name to search: ");
+                    System.out.print("Concert name to search (Keyword Search): ");
                     input = reader.readLine();
                     Query.concert(input);
                     break;
                 //Genre
                 case 7:
-                    System.out.print("Genre name: ");
+                    System.out.print("Genre name (Keyword Search): ");
                     input = reader.readLine();
                     Query.genre(input);
                     break;
@@ -138,7 +138,7 @@ public class DriverCode {
                     break;
                 case 16:
                     //Insert playlist
-                    System.out.print("Enter playlist name: ");
+                    System.out.print("Enter playlist name (Keyword Search): ");
                     input = reader.readLine();
                     output = Query.insertPlayList(input);
                     System.out.println(output);
@@ -177,13 +177,13 @@ public class DriverCode {
                     Query.removeSongFromPlaylist();
                     break;
                 case 22:
-                    System.out.print("Enter Concert Name: ");
+                    System.out.print("Enter Concert Name (Keyword Search): ");
                     input = reader.readLine();
                     Query.updateConcert(input);
                     break;
 
                 default:
-                    System.out.println("Please enter an option 0-9");
+                    System.out.println("Please enter an option 0-22");
                     break;
             }
             System.out.println();
