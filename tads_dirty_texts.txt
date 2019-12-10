@@ -7,4 +7,6 @@ Errors to fix
 2. Menu Option 18
 - If I input the wrong date format, I will get an SQL error. No concert will be created, but an empty playlist will be created.
 
-3.
+3. Menu Option 19
+-Unable to delete a playlist. A playlist can be searched, but the playlist deletion will show an error
+
