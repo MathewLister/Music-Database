@@ -733,6 +733,7 @@ class Query {
     static void deletePlaylist() {
         Map<String, Integer> cache = new HashMap<>();
         String getPlaylists = "SELECT playlist_name, playlist_id FROM playlist WHERE playlist_name LIKE ? ;";
+        String removeSongsFromPlaylist = "DELETE FROM playlist_song WHERE playlist_id = ? ;";
         String deletePlaylist = "DELETE FROM playlist WHERE playlist_id = ? ;";
         String format = "| %-50s |%n";
         Integer playlistID = null;
@@ -766,9 +767,14 @@ class Query {
                 input = reader.readLine();
                 playlistID = cache.get(input);
                 if (playlistID != null) {
+                    ps = con.prepareStatement(removeSongsFromPlaylist);
+                    ps.setInt(1, playlistID);
+                    ps.executeUpdate();
+                    ps.close();
                     ps = con.prepareStatement(deletePlaylist);
                     ps.setInt(1, playlistID);
                     ps.executeUpdate();
+                    ps.close();
                     System.out.println("Delete Successful");
                 } else {
                     System.out.println("Invalid Playlist");
