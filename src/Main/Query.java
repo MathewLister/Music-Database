@@ -151,6 +151,7 @@ class Query {
                 ps1.close();
             } else {
                 System.out.println("No Playlists found");
+                con.close();
                 return;
             }
 
@@ -500,59 +501,58 @@ class Query {
         //This grabs strings from console for queries
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        while (choice == 1) {
-            System.out.println("\n1. Enter New Song\n2. Exit");
-            try {
-                // read in user input
-                input = reader.readLine();
-                choice = Integer.parseInt(input);
-                if (choice == 1) {
-                    System.out.print("Enter Song Name: ");
-                    searchSong = reader.readLine(); // read in song name
-                    ps = con.prepareStatement(getSongs1 + searchSong + getSongs2); // get songs related to search
-                    rs = ps.executeQuery();
-
-                    if (rs.next()) {
-                        do { // enter all songs into a hashmap
-                            cache.put(new Pair<>(rs.getString(1), rs.getString(2)), rs.getInt(3));
-                        } while (rs.next());
-                    }
-                    ps.close();
-                    rs.close();
-                    System.out.format(formatMap, "Artist Name", "Song");
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    cache.forEach((key, value) -> System.out.format(formatMap, key.getKey(), key.getValue()));
-                    System.out.println("----------------------------------------------------------------------------------------------------");
-                    if (cache.isEmpty()) {
-                        System.out.println("No Results");
-                        continue;
-                    }
-                    System.out.print("Enter Artist Name: ");
-                    artist = reader.readLine();
-                    System.out.print("Enter Song Name: ");
-                    song = reader.readLine();
-                    keyID = cache.get(new Pair<>(artist, song));
-                    if (keyID != null) {
-                        // insert song into playlist
-                        ps = con.prepareStatement(insertSongIntoPlaylist);
-                        ps.setInt(1, keyID);
-                        ps.setInt(2, playlistID);
-                        ps.executeUpdate();
-                        System.out.println("Insertion Successful");
-                    }
-
-                    System.out.println("\n1. Enter New Song\n2. Exit");
+        try {
+            while (choice == 1) {
+                System.out.println("\n1. Enter New Song\n2. Exit");
+                try {
+                    // read in user input
                     input = reader.readLine();
                     choice = Integer.parseInt(input);
+                    if (choice == 1) {
+                        System.out.print("Enter Song Name: ");
+                        searchSong = reader.readLine(); // read in song name
+                        ps = con.prepareStatement(getSongs1 + searchSong + getSongs2); // get songs related to search
+                        rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            do { // enter all songs into a hashmap
+                                cache.put(new Pair<>(rs.getString(1), rs.getString(2)), rs.getInt(3));
+                            } while (rs.next());
+                        }
+                        ps.close();
+                        rs.close();
+                        System.out.format(formatMap, "Artist Name", "Song");
+                        System.out.println("----------------------------------------------------------------------------------------------------");
+                        cache.forEach((key, value) -> System.out.format(formatMap, key.getKey(), key.getValue()));
+                        System.out.println("----------------------------------------------------------------------------------------------------");
+                        if (cache.isEmpty()) {
+                            System.out.println("No Results");
+                            continue;
+                        }
+                        System.out.print("Enter Artist Name: ");
+                        artist = reader.readLine();
+                        System.out.print("Enter Song Name: ");
+                        song = reader.readLine();
+                        keyID = cache.get(new Pair<>(artist, song));
+                        if (keyID != null) {
+                            // insert song into playlist
+                            ps = con.prepareStatement(insertSongIntoPlaylist);
+                            ps.setInt(1, keyID);
+                            ps.setInt(2, playlistID);
+                            ps.executeUpdate();
+                            System.out.println("Insertion Successful");
+                        }
+                    }
+                    cache.clear();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Invalid Input");
                 }
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Invalid Input");
             }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
     }
 
     static String insertConcert(String concertName, String concertDate, String concertLocation, String playListName) {

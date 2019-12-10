@@ -145,7 +145,7 @@ public class DriverCode {
                     break;
                 case 17:
                     // insert song in playlist
-                    System.out.print("Enter Playlist Name: ");
+                    System.out.print("Enter Playlist Name (Case Sensitive) : ");
                     input = reader.readLine();
                     Query.insertSongsIntoPlaylist(input);
                     break;
