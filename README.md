@@ -64,4 +64,7 @@ BASIC FUNCTIONS OF USER INTERFACE
 4. Delete (Search by keyword, then validation is CASE SENSITIVE)
   - Get rid of playlist table
   - Get rid of concert table
-  
+5. Update
+	-Update the name of concert
+	-Update the date of concert
+	-Update the location of concert
